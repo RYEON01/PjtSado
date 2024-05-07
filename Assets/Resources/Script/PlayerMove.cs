@@ -7,16 +7,20 @@ public class PlayerMove : MonoBehaviour
     public float maxSpeed;
     public float slopeForce;
     public float raycastLength;
+    public Transform chorangTransform; // Reference to Chorang's transform
+    public float chorangOffsetX; // Offset value for Chorang's x position
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
     bool isGrounded;
+    SpriteRenderer chorangSpriteRenderer; // Reference to Chorang's sprite renderer
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        chorangSpriteRenderer = chorangTransform.GetComponent<SpriteRenderer>(); // Get Chorang's sprite renderer
     }
 
     void Update()
@@ -37,7 +41,13 @@ public class PlayerMove : MonoBehaviour
 
         // Flip sprite
         if(h != 0)
+        {
             spriteRenderer.flipX = h < 0;
+            // Also adjust Chorang's position based on the flip
+            chorangTransform.localPosition = new Vector3(spriteRenderer.flipX ? -chorangOffsetX : chorangOffsetX, chorangTransform.localPosition.y, chorangTransform.localPosition.z);
+            // Flip Chorang
+            chorangSpriteRenderer.flipX = spriteRenderer.flipX;
+        }
 
         // Set animation
         anim.SetBool("isWalking", h != 0);

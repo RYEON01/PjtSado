@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PuzzleTrigger1
+  - PuzzleTrigger2
+  - PuzzleTrigger3
+  - PuzzleTrigger4
+  - PuzzleTrigger5
   layers:
   - Default
   - TransparentFX
