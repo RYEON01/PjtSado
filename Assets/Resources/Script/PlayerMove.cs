@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    bool isColliding; // 콜라이더가 겹쳐있는지 여부를 나타내는 변수
     public float maxSpeed;
     public float slopeForce;
     public float raycastLength;
@@ -51,6 +52,16 @@ public class PlayerMove : MonoBehaviour
 
         // Set animation
         anim.SetBool("isWalking", h != 0);
+
+        if (isColliding && Input.GetKeyDown(KeyCode.E)) // 콜라이더가 겹쳐있고 E 키가 눌렸을 때만 실행
+        {
+            Debug.Log("E 키 눌렸다!");
+            PuzzleController puzzleController = GetComponent<PuzzleController>(); // 퍼즐 컨트롤러가 플레이어에게서 가져올 수 있도록 수정
+            if (puzzleController != null)
+            {
+                puzzleController.HandlePuzzleInteraction();
+            }
+        }
     }
 
     void FixedUpdate()
@@ -64,6 +75,26 @@ public class PlayerMove : MonoBehaviour
                 Vector2 slopeForceDirection = Vector2.Perpendicular(hit.normal).normalized * -Mathf.Sign(hit.normal.x);
                 rigid.AddForce(slopeForceDirection * slopeForce, ForceMode2D.Force);
             }
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        // 충돌한 객체가 트리거 콜라이더인지 확인
+        if (other.isTrigger)
+        {
+            Debug.Log("Stay충돌했다!");
+            isColliding = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        // 충돌한 객체가 트리거 콜라이더인지 확인
+        if (other.isTrigger)
+        {
+            Debug.Log("Stay빠져나왔다!");
+            isColliding = false; // 콜라이더가 빠져나온 상태로 설정
         }
     }
 }

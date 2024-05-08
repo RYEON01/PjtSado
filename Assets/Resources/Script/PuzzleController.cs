@@ -10,36 +10,45 @@ public class PuzzleController : MonoBehaviour
     public GameObject puzzlePlatform4;
     public GameObject puzzlePlatform5;
 
-    void OnTriggerEnter(Collider other)
+    public void HandlePuzzleInteraction()
     {
-        if (other.CompareTag("PuzzleTrigger1"))
+        if (puzzlePlatform1 != null && puzzlePlatform3 != null)
         {
-            Interact(puzzlePlatform1);
+            RotateAndLog(puzzlePlatform1, "1");
+            RotateAndLog(puzzlePlatform3, "3");
         }
-        else if (other.CompareTag("PuzzleTrigger2"))
+        if (puzzlePlatform2 != null && puzzlePlatform4 != null)
         {
-            Interact(puzzlePlatform2);
+            RotateAndLog(puzzlePlatform2, "2");
+            RotateAndLog(puzzlePlatform4, "4");
         }
-        else if (other.CompareTag("PuzzleTrigger3"))
+        if (puzzlePlatform3 != null && puzzlePlatform5 != null)
         {
-            Interact(puzzlePlatform3);
+            RotateAndLog(puzzlePlatform3, "3");
+            RotateAndLog(puzzlePlatform5, "5");
         }
-        else if (other.CompareTag("PuzzleTrigger4"))
+        if (puzzlePlatform1 != null && puzzlePlatform4 != null)
         {
-            Interact(puzzlePlatform4);
+            RotateAndLog(puzzlePlatform1, "1");
+            RotateAndLog(puzzlePlatform4, "4");
         }
-        else if (other.CompareTag("PuzzleTrigger5"))
+        if (puzzlePlatform2 != null && puzzlePlatform5 != null)
         {
-            Interact(puzzlePlatform5);
+            RotateAndLog(puzzlePlatform2, "2");
+            RotateAndLog(puzzlePlatform5, "5");
         }
     }
-
-    void Interact(GameObject platform)
+    
+    void RotateAndLog(GameObject platform, string puzzleNumber)
     {
+        Debug.Log("RotateAndLog 함수 실행됐다!");
         PuzzlePlatform puzzlePlatform = platform.GetComponent<PuzzlePlatform>();
+        
         if (puzzlePlatform != null)
         {
             puzzlePlatform.RotatePlatforms();
+            Debug.Log(puzzleNumber + "RotatePlatforms 불러왔다!");
         }
     }
+    
 }
