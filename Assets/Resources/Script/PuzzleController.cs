@@ -10,44 +10,72 @@ public class PuzzleController : MonoBehaviour
     public GameObject puzzlePlatform4;
     public GameObject puzzlePlatform5;
 
-    public void HandlePuzzleInteraction()
+    
+    void Start()
     {
-        if (puzzlePlatform1 != null && puzzlePlatform3 != null)
+        AssignChildrenToPuzzlePlatforms();
+    }
+
+    void AssignChildrenToPuzzlePlatforms()
+    {
+        puzzlePlatform1 = GameObject.Find("Platform_A").transform.parent.gameObject;
+        puzzlePlatform2 = GameObject.Find("Platform_B").transform.parent.gameObject;
+        puzzlePlatform3 = GameObject.Find("Platform_C").transform.parent.gameObject;
+        puzzlePlatform4 = GameObject.Find("Platform_D").transform.parent.gameObject;
+        puzzlePlatform5 = GameObject.Find("Platform_E").transform.parent.gameObject;
+
+        Debug.Log("PuzzlePlatform1 game object: " + puzzlePlatform1.name + ", child objects: " + puzzlePlatform1.transform.childCount);
+        Debug.Log("PuzzlePlatform2 game object: " + puzzlePlatform2.name + ", child objects: " + puzzlePlatform2.transform.childCount);
+        Debug.Log("PuzzlePlatform3 game object: " + puzzlePlatform3.name + ", child objects: " + puzzlePlatform3.transform.childCount);
+        Debug.Log("PuzzlePlatform4 game object: " + puzzlePlatform4.name + ", child objects: " + puzzlePlatform4.transform.childCount);
+        Debug.Log("PuzzlePlatform5 game object: " + puzzlePlatform5.name + ", child objects: " + puzzlePlatform5.transform.childCount);
+    }
+    public void HandlePuzzleInteraction(string tag)
+    {
+        switch (tag)
         {
-            RotateAndLog(puzzlePlatform1, "1");
-            RotateAndLog(puzzlePlatform3, "3");
-        }
-        if (puzzlePlatform2 != null && puzzlePlatform4 != null)
-        {
-            RotateAndLog(puzzlePlatform2, "2");
-            RotateAndLog(puzzlePlatform4, "4");
-        }
-        if (puzzlePlatform3 != null && puzzlePlatform5 != null)
-        {
-            RotateAndLog(puzzlePlatform3, "3");
-            RotateAndLog(puzzlePlatform5, "5");
-        }
-        if (puzzlePlatform1 != null && puzzlePlatform4 != null)
-        {
-            RotateAndLog(puzzlePlatform1, "1");
-            RotateAndLog(puzzlePlatform4, "4");
-        }
-        if (puzzlePlatform2 != null && puzzlePlatform5 != null)
-        {
-            RotateAndLog(puzzlePlatform2, "2");
-            RotateAndLog(puzzlePlatform5, "5");
+            case "PuzzleTrigger1":
+                RotateAndLog(puzzlePlatform1, "1");
+                RotateAndLog(puzzlePlatform3, "3");
+                break;
+            case "PuzzleTrigger2":
+                RotateAndLog(puzzlePlatform2, "2");
+                RotateAndLog(puzzlePlatform4, "4");
+                break;
+            case "PuzzleTrigger3":
+                RotateAndLog(puzzlePlatform3, "3");
+                RotateAndLog(puzzlePlatform5, "5");
+                break;
+            case "PuzzleTrigger4":
+                RotateAndLog(puzzlePlatform1, "1");
+                RotateAndLog(puzzlePlatform4, "4");
+                break;
+            case "PuzzleTrigger5":
+                RotateAndLog(puzzlePlatform2, "2");
+                RotateAndLog(puzzlePlatform5, "5");
+                break;
         }
     }
+
     
     void RotateAndLog(GameObject platform, string puzzleNumber)
     {
         Debug.Log("RotateAndLog 함수 실행됐다!");
-        PuzzlePlatform puzzlePlatform = platform.GetComponent<PuzzlePlatform>();
-        
-        if (puzzlePlatform != null)
+        Debug.Log("Number of child objects: " + platform.transform.childCount);
+        for (int i = 0; i < platform.transform.childCount; i++)
         {
-            puzzlePlatform.RotatePlatforms();
-            Debug.Log(puzzleNumber + "RotatePlatforms 불러왔다!");
+            PuzzlePlatform puzzlePlatform = platform.transform.GetChild(i).GetComponent<PuzzlePlatform>();
+
+            if (puzzlePlatform != null)
+            {
+                Debug.Log("PuzzlePlatform component found on child object: " + platform.transform.GetChild(i).name);
+                puzzlePlatform.RotatePlatforms();
+                Debug.Log(puzzleNumber + " RotatePlatforms called!");
+            }
+            else
+            {
+                Debug.Log("Child object: " + platform.transform.GetChild(i).name + " does not have a PuzzlePlatform component.");
+            }
         }
     }
     

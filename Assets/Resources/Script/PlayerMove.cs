@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     bool isColliding; // 콜라이더가 겹쳐있는지 여부를 나타내는 변수
+    bool hasLoggedOverlap = false; // Add this line
     public float maxSpeed;
     public float slopeForce;
     public float raycastLength;
@@ -15,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     Animator anim;
     bool isGrounded;
     SpriteRenderer chorangSpriteRenderer; // Reference to Chorang's sprite renderer
+    GameObject collidedObject; // 충돌한 객체를 저장하는 변수
 
     void Awake()
     {
@@ -30,7 +32,7 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
 
         // If the player is grounded and no horizontal input is detected, freeze the velocity
-        if(isGrounded && h == 0)
+        if (isGrounded && h == 0)
         {
             rigid.velocity = new Vector2(0f, rigid.velocity.y);
         }
@@ -41,11 +43,12 @@ public class PlayerMove : MonoBehaviour
         }
 
         // Flip sprite
-        if(h != 0)
+        if (h != 0)
         {
             spriteRenderer.flipX = h < 0;
             // Also adjust Chorang's position based on the flip
-            chorangTransform.localPosition = new Vector3(spriteRenderer.flipX ? -chorangOffsetX : chorangOffsetX, chorangTransform.localPosition.y, chorangTransform.localPosition.z);
+            chorangTransform.localPosition = new Vector3(spriteRenderer.flipX ? -chorangOffsetX : chorangOffsetX,
+                chorangTransform.localPosition.y, chorangTransform.localPosition.z);
             // Flip Chorang
             chorangSpriteRenderer.flipX = spriteRenderer.flipX;
         }
@@ -53,13 +56,14 @@ public class PlayerMove : MonoBehaviour
         // Set animation
         anim.SetBool("isWalking", h != 0);
 
-        if (isColliding && Input.GetKeyDown(KeyCode.E)) // 콜라이더가 겹쳐있고 E 키가 눌렸을 때만 실행
+        if (isColliding && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("E 키 눌렸다!");
-            PuzzleController puzzleController = GetComponent<PuzzleController>(); // 퍼즐 컨트롤러가 플레이어에게서 가져올 수 있도록 수정
+            PuzzleController puzzleController = GetComponent<PuzzleController>();
             if (puzzleController != null)
             {
-                puzzleController.HandlePuzzleInteraction();
+                // Pass the collided object's tag to the HandlePuzzleInteraction method
+                puzzleController.HandlePuzzleInteraction(collidedObject.tag);
             }
         }
     }
@@ -80,11 +84,12 @@ public class PlayerMove : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        // 충돌한 객체가 트리거 콜라이더인지 확인
-        if (other.isTrigger)
+        if (other.isTrigger && !hasLoggedOverlap) // Check if hasLoggedOverlap is false
         {
             Debug.Log("Stay충돌했다!");
             isColliding = true;
+            collidedObject = other.gameObject;
+            hasLoggedOverlap = true; // Set hasLoggedOverlap to true after logging
         }
     }
 
@@ -94,7 +99,9 @@ public class PlayerMove : MonoBehaviour
         if (other.isTrigger)
         {
             Debug.Log("Stay빠져나왔다!");
-            isColliding = false; // 콜라이더가 빠져나온 상태로 설정
+            isColliding = false;
+            collidedObject = null;
+            hasLoggedOverlap = false; // Reset hasLoggedOverlap to false when no longer overlapping
         }
     }
 }
