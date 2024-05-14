@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PuzzleController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PuzzleController : MonoBehaviour
     public GameObject puzzlePlatform4;
     public GameObject puzzlePlatform5;
 
+    public List<PuzzlePlatform> puzzlePlatforms = new List<PuzzlePlatform>();
     
     void Start()
     {
@@ -18,67 +20,80 @@ public class PuzzleController : MonoBehaviour
 
     void AssignChildrenToPuzzlePlatforms()
     {
-        puzzlePlatform1 = GameObject.Find("Platform_A").transform.parent.gameObject;
-        puzzlePlatform2 = GameObject.Find("Platform_B").transform.parent.gameObject;
-        puzzlePlatform3 = GameObject.Find("Platform_C").transform.parent.gameObject;
-        puzzlePlatform4 = GameObject.Find("Platform_D").transform.parent.gameObject;
-        puzzlePlatform5 = GameObject.Find("Platform_E").transform.parent.gameObject;
+        puzzlePlatform1 = GameObject.Find("Platform_A");
+        puzzlePlatform2 = GameObject.Find("Platform_B");
+        puzzlePlatform3 = GameObject.Find("Platform_C");
+        puzzlePlatform4 = GameObject.Find("Platform_D");
+        puzzlePlatform5 = GameObject.Find("Platform_E");
 
-        /*
-        Debug.Log("PuzzlePlatform1 game object: " + puzzlePlatform1.name + ", child objects: " + puzzlePlatform1.transform.childCount);
-        Debug.Log("PuzzlePlatform2 game object: " + puzzlePlatform2.name + ", child objects: " + puzzlePlatform2.transform.childCount);
-        Debug.Log("PuzzlePlatform3 game object: " + puzzlePlatform3.name + ", child objects: " + puzzlePlatform3.transform.childCount);
-        Debug.Log("PuzzlePlatform4 game object: " + puzzlePlatform4.name + ", child objects: " + puzzlePlatform4.transform.childCount);
-        Debug.Log("PuzzlePlatform5 game object: " + puzzlePlatform5.name + ", child objects: " + puzzlePlatform5.transform.childCount);
-        */
+        // Add the PuzzlePlatform components of the GameObjects to the puzzlePlatforms list
+        puzzlePlatforms.Add(puzzlePlatform1.GetComponent<PuzzlePlatform>());
+        puzzlePlatforms.Add(puzzlePlatform2.GetComponent<PuzzlePlatform>());
+        puzzlePlatforms.Add(puzzlePlatform3.GetComponent<PuzzlePlatform>());
+        puzzlePlatforms.Add(puzzlePlatform4.GetComponent<PuzzlePlatform>());
+        puzzlePlatforms.Add(puzzlePlatform5.GetComponent<PuzzlePlatform>());
     }
-    public void HandlePuzzleInteraction(string tag)
+
+    public IEnumerator HandlePuzzleInteraction(string tag)
     {
+        Debug.Log("HandlePuzzleInteraction started with tag: " + tag);
         switch (tag)
         {
             case "PuzzleTrigger1":
-                RotateAndLog(puzzlePlatform1, "1");
-                RotateAndLog(puzzlePlatform3, "3");
+                yield return StartCoroutine(RotateTwoPlatformsAndLog(puzzlePlatform1, puzzlePlatform3, "1"));
                 break;
             case "PuzzleTrigger2":
-                RotateAndLog(puzzlePlatform2, "2");
-                RotateAndLog(puzzlePlatform4, "4");
+                yield return StartCoroutine(RotateTwoPlatformsAndLog(puzzlePlatform2, puzzlePlatform4, "2"));
                 break;
             case "PuzzleTrigger3":
-                RotateAndLog(puzzlePlatform3, "3");
-                RotateAndLog(puzzlePlatform5, "5");
+                yield return StartCoroutine(RotateTwoPlatformsAndLog(puzzlePlatform3, puzzlePlatform5, "3"));
                 break;
             case "PuzzleTrigger4":
-                RotateAndLog(puzzlePlatform1, "1");
-                RotateAndLog(puzzlePlatform4, "4");
+                yield return StartCoroutine(RotateTwoPlatformsAndLog(puzzlePlatform1, puzzlePlatform4, "4"));
                 break;
             case "PuzzleTrigger5":
-                RotateAndLog(puzzlePlatform2, "2");
-                RotateAndLog(puzzlePlatform5, "5");
+                yield return StartCoroutine(RotateTwoPlatformsAndLog(puzzlePlatform2, puzzlePlatform5, "5"));
                 break;
         }
-    }
+        Debug.Log("2HandlePuzzleInteraction finished with tag: " + tag);
 
-    
-    void RotateAndLog(GameObject platform, string puzzleNumber)
-    {
-        //Debug.Log("RotateAndLog 함수 실행됐다!");
-        //Debug.Log("Number of child objects: " + platform.transform.childCount);
-        for (int i = 0; i < platform.transform.childCount; i++)
+        // Print the current rotation of all platforms
+        foreach (var puzzlePlatform in puzzlePlatforms)
         {
-            PuzzlePlatform puzzlePlatform = platform.transform.GetChild(i).GetComponent<PuzzlePlatform>();
-
-            if (puzzlePlatform != null)
-            {
-                //Debug.Log("PuzzlePlatform component found on child object: " + platform.transform.GetChild(i).name);
-                puzzlePlatform.RotatePlatforms();
-                //Debug.Log(puzzleNumber + " RotatePlatforms called!");
-            }
-            else
-            {
-                //Debug.Log("Child object: " + platform.transform.GetChild(i).name + " does not have a PuzzlePlatform component.");
-            }
+            Debug.Log("Current rotation of platform: " + puzzlePlatform.gameObject.name + " is " + puzzlePlatform.GetCurrentRotation());
         }
+
+        // Check the solution after handling the interaction
+        if (PuzzleManager.Instance.CheckSolution())
+        {
+            Debug.Log("Puzzle solved! No further interactions allowed.");
+        }
+        else
+        {
+            Debug.Log("Puzzle not solved yet. Further interactions allowed.");
+        }
+        Debug.Log("1HandlePuzzleInteraction finished with tag: " + tag);
     }
-    
+
+
+
+    IEnumerator RotateTwoPlatformsAndLog(GameObject platform1, GameObject platform2, string puzzleNumber)
+    {
+        Debug.Log("RotateTwoPlatformsAndLog started with puzzleNumber: " + puzzleNumber);
+
+        PuzzlePlatform puzzlePlatform1 = platform1.GetComponent<PuzzlePlatform>();
+        PuzzlePlatform puzzlePlatform2 = platform2.GetComponent<PuzzlePlatform>();
+
+        if (puzzlePlatform1 != null)
+        {
+            yield return StartCoroutine(puzzlePlatform1.RotatePlatforms());
+        }
+
+        if (puzzlePlatform2 != null)
+        {
+            yield return StartCoroutine(puzzlePlatform2.RotatePlatforms());
+        }
+
+        Debug.Log("RotateTwoPlatformsAndLog finished with puzzleNumber: " + puzzleNumber);
+    }
 }

@@ -9,74 +9,71 @@ public class PuzzlePlatform : MonoBehaviour
 
     private bool[] hasRotated = { false, false, false, false, false };
     private int[] currentRotations = { 180, 90, 270, 180, 0 };
+    private bool[] isAtZeroDegrees = { false, false, false, false, true };
 
     void Start()
-    {/*
-        if (transform.parent != null)
-        {
-            Debug.Log("Parent game object: " + transform.parent.gameObject.name);
-            Debug.Log("Number of sibling objects: " + transform.parent.childCount);
-        }
-        else
-        {
-            Debug.Log("This game object has no parent.");
-        }
-        */
+    {
     }
-    
+
     void Update()
     {
-        //Debug.Log("Update method called");
-        if (CheckSolution())
-        {
-            puzzleCollider.enabled = false;
-            //Debug.Log("Puzzle solved!");
-        }
-        // If the puzzle is solved, do not allow further rotations
-        if (CheckSolution())
-        {
-            //Debug.Log("Puzzle solved! No further rotations allowed.");
-            return;
-        }
     }
 
-    public void RotatePlatforms()
+    public int GetCurrentRotation()
     {
-        
-        // If the puzzle is solved, do not allow further rotations
-        if (CheckSolution())
-        {
-            //Debug.Log("Puzzle solved! No further rotations allowed.");
-            return;
-        }
-        
-        //Debug.Log("RotatePlatforms method started");
-        //Debug.Log("Current rotation for platform " + gameObject.name + ": " + currentRotations[platformIndex]);
-        //Debug.Log("Target rotation for platform " + gameObject.name + ": " +
-                  Quaternion.Euler(0f, 0f, currentRotations[platformIndex]);
+        return currentRotations[platformIndex];
+    }
 
-        if (!hasRotated[platformIndex])
+    public IEnumerator RotatePlatforms()
+    {
+        //Debug.Log("RotatePlatforms called for platform: " + gameObject.name + " with platformIndex: " + platformIndex);
+
+        int targetRotation = (currentRotations[platformIndex] + 90) % 360; // Calculate the target rotation
+
+        yield return StartCoroutine(RotateOverTime(gameObject.transform, Quaternion.Euler(0f, 0f, targetRotation)));
+
+        // Update currentRotations array after the rotation animation completes
+        currentRotations[platformIndex] = Mathf.RoundToInt(gameObject.transform.eulerAngles.z / 90) * 90;
+
+        // Update isAtZeroDegrees array
+        if (currentRotations[platformIndex] == 0 || currentRotations[platformIndex] == 360)
         {
-            currentRotations[platformIndex] = (currentRotations[platformIndex] + 90) % 360;
-            hasRotated[platformIndex] = true;
+            isAtZeroDegrees[platformIndex] = true;
         }
         else
         {
-            currentRotations[platformIndex] = (currentRotations[platformIndex] + 90) % 360;
+            isAtZeroDegrees[platformIndex] = false;
         }
 
-        //Debug.Log("Updated rotation for platform " + gameObject.name + ": " + currentRotations[platformIndex]);
-        StartCoroutine(RotateOverTime(gameObject.transform, Quaternion.Euler(0f, 0f, currentRotations[platformIndex])));
-
-        // Print out the currentRotations array after each rotation
-        //Debug.Log("Current rotations after rotation: " + string.Join(", ", currentRotations));
-        
+        // Print the current rotation of the platform
+        //Debug.Log("Current rotation of platform: " + gameObject.name + " is " + currentRotations[platformIndex]);
     }
 
+    IEnumerator RotateTwoPlatformsAndLog(GameObject platform1, GameObject platform2, string puzzleNumber)
+    {
+        Debug.Log("RotateTwoPlatformsAndLog started with puzzleNumber: " + puzzleNumber);
+
+        PuzzlePlatform puzzlePlatform1 = platform1.GetComponent<PuzzlePlatform>();
+        PuzzlePlatform puzzlePlatform2 = platform2.GetComponent<PuzzlePlatform>();
+
+        if (puzzlePlatform1 != null)
+        {
+            yield return StartCoroutine(puzzlePlatform1.RotatePlatforms());
+        }
+
+        if (puzzlePlatform2 != null)
+        {
+            yield return StartCoroutine(puzzlePlatform2.RotatePlatforms());
+        }
+
+        Debug.Log("RotateTwoPlatformsAndLog finished with puzzleNumber: " + puzzleNumber);
+
+        yield return null; // Add this line
+    }
+    
     IEnumerator RotateOverTime(Transform platform, Quaternion targetRotation)
     {
-        //Debug.Log("RotateOverTime coroutine started for platform: " + platform.name);
-        float duration = 1.0f; // Duration of the rotation in seconds
+        float duration = 0.5f; // Duration of the rotation in seconds
         Quaternion startRotation = platform.rotation;
         float elapsed = 0.0f;
 
@@ -84,52 +81,9 @@ public class PuzzlePlatform : MonoBehaviour
         {
             platform.rotation = Quaternion.Lerp(startRotation, targetRotation, elapsed / duration);
             elapsed += Time.deltaTime;
-
             yield return null;
         }
 
         platform.rotation = targetRotation;
-    }
-
-    public bool CheckSolution()
-    {
-        Debug.Log("Checking solution");
-
-        // Define the desired state
-        int[] desiredRotations = { 180, 0, 270, 180, 0 };
-
-        // Print out the currentRotations and desiredRotations arrays
-        Debug.Log("Current rotations: " + string.Join(", ", currentRotations));
-        Debug.Log("Desired rotations: " + string.Join(", ", desiredRotations));
-
-        // Assume the puzzle is solved until proven otherwise
-        bool isSolved = true;
-
-        // Check each platform's rotation
-        for (int i = 0; i < currentRotations.Length; i++)
-        {
-            // If the current rotation does not match the desired rotation, the puzzle is not solved
-            if (currentRotations[i] != desiredRotations[i])
-            {
-                isSolved = false;
-                break; // No need to check further, exit the loop
-            }
-        }
-
-        Debug.Log("Solution check result: " + isSolved);
-        //Debug.Log("Puzzle collider enabled state before check: " + puzzleCollider.enabled);
-        
-        if (isSolved)
-        {
-            // If the puzzle is solved, set isColliding to false in the PlayerMove script
-            PlayerMove playerMove = FindObjectOfType<PlayerMove>();
-            if (playerMove != null)
-            {
-                playerMove.isColliding = false;
-                playerMove.collidedObject = null;
-            }
-        }
-        
-        return isSolved;
     }
 }

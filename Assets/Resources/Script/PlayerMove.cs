@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     bool isGrounded;
     SpriteRenderer chorangSpriteRenderer; // Reference to Chorang's sprite renderer
     public GameObject collidedObject; // 충돌한 객체를 저장하는 변수
+    private bool canInteract = true; // Add this line
 
     void Awake()
     {
@@ -53,37 +54,16 @@ public class PlayerMove : MonoBehaviour
             chorangSpriteRenderer.flipX = spriteRenderer.flipX;
         }
 
-        // Set animation
         anim.SetBool("isWalking", h != 0);
 
-        if (isColliding && Input.GetKeyDown(KeyCode.E))
+        if (isColliding && Input.GetKeyDown(KeyCode.E) && canInteract)
         {
-            //Debug.Log("E 키 눌렸다!");
+            StartCoroutine(InteractionCooldown(1.0f)); // Start the interaction cooldown immediately after the interaction key is pressed
+
             PuzzleController puzzleController = GetComponent<PuzzleController>();
             if (puzzleController != null)
             {
-                PuzzlePlatform puzzlePlatform = collidedObject.GetComponent<PuzzlePlatform>();
-                // If the puzzle is solved, do not allow further interactions
-                if (puzzlePlatform != null && puzzlePlatform.CheckSolution())
-                {
-                    Debug.Log("Puzzle solved! No further interactions allowed.");
-                    isColliding = false; // Set isColliding to false
-                    collidedObject = null; // Set collidedObject to null
-                    return;
-                }
-                // If the puzzle is not solved, allow interactions
-                puzzleController.HandlePuzzleInteraction(collidedObject.tag);
-            }
-        }
-        // If the puzzle is solved and the player is still within the puzzle's collider, set isColliding to false
-        else if (isColliding)
-        {
-            PuzzlePlatform puzzlePlatform = collidedObject.GetComponent<PuzzlePlatform>();
-            if (puzzlePlatform != null && puzzlePlatform.CheckSolution())
-            {
-                Debug.Log("Puzzle solved! No further interactions allowed.");
-                isColliding = false; // Set isColliding to false
-                collidedObject = null; // Set collidedObject to null
+                StartCoroutine(puzzleController.HandlePuzzleInteraction(collidedObject.tag));
             }
         }
     }
@@ -106,7 +86,6 @@ public class PlayerMove : MonoBehaviour
     {
         if (other.isTrigger && !hasLoggedOverlap) // Check if hasLoggedOverlap is false
         {
-            //Debug.Log("Stay충돌했다!");
             isColliding = true;
             collidedObject = other.gameObject;
             hasLoggedOverlap = true; // Set hasLoggedOverlap to true after logging
@@ -118,10 +97,16 @@ public class PlayerMove : MonoBehaviour
         // 충돌한 객체가 트리거 콜라이더인지 확인
         if (other.isTrigger)
         {
-            //Debug.Log("Stay빠져나왔다!");
             isColliding = false;
             collidedObject = null;
             hasLoggedOverlap = false; // Reset hasLoggedOverlap to false when no longer overlapping
         }
+    }
+    
+    IEnumerator InteractionCooldown(float duration)
+    {
+        canInteract = false;
+        yield return new WaitForSeconds(duration);
+        canInteract = true;
     }
 }
