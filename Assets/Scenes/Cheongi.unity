@@ -321,7 +321,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1905145567}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &48339181
 SpriteRenderer:
@@ -768,7 +768,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: a0afb840a39680a4fb2a9d1f2885ac5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2155,7 +2155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &384385654
 Transform:
   m_ObjectHideFlags: 0
@@ -2167,10 +2167,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1234421453}
+  m_Children: []
   m_Father: {fileID: 1028054918}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &387078196
 GameObject:
@@ -2186,7 +2185,6 @@ GameObject:
   - component: {fileID: 387078201}
   - component: {fileID: 387078204}
   - component: {fileID: 387078203}
-  - component: {fileID: 387078205}
   m_Layer: 0
   m_Name: Imae
   m_TagString: Player
@@ -2332,28 +2330,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce806f30bd92aa47b0bf7a3bd54acf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
   maxSpeed: 10
   slopeForce: 0
   raycastLength: 1.2
   chorangTransform: {fileID: 1528722373}
   chorangOffsetX: -1.35
---- !u!114 &387078205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387078196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5a6f75b85fc2d4bb495da0aae3115f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puzzlePlatform1: {fileID: 1218692104}
-  puzzlePlatform2: {fileID: 384385653}
-  puzzlePlatform3: {fileID: 1883761537}
-  puzzlePlatform4: {fileID: 1327871028}
-  puzzlePlatform5: {fileID: 1989480496}
 --- !u!1 &394178959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3942,7 +3924,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 4403990430653ec44a3310c3357725d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4429,7 +4411,7 @@ GameObject:
   - component: {fileID: 774615000}
   - component: {fileID: 774615002}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Controller2
   m_TagString: PuzzleTrigger2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4540,11 +4522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a6f75b85fc2d4bb495da0aae3115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzlePlatform1: {fileID: 1218692104}
-  puzzlePlatform2: {fileID: 384385653}
-  puzzlePlatform3: {fileID: 1883761537}
-  puzzlePlatform4: {fileID: 1327871028}
-  puzzlePlatform5: {fileID: 1989480496}
+  platform1: {fileID: 1234421455}
+  platform2: {fileID: 1644284344}
 --- !u!1 &790817632
 GameObject:
   m_ObjectHideFlags: 0
@@ -4784,7 +4763,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1905145567}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &864826468
 SpriteRenderer:
@@ -4868,7 +4847,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1905145567}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &865281825
 SpriteRenderer:
@@ -4979,7 +4958,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: a0afb840a39680a4fb2a9d1f2885ac5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5200,6 +5179,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &911330586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 911330588}
+  - component: {fileID: 911330587}
+  m_Layer: 0
+  m_Name: PuzzleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &911330587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911330586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd6abc0273b33d43bbf88384ea8f5b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platforms:
+  - {fileID: 1902919478}
+  - {fileID: 1234421455}
+  - {fileID: 1109558269}
+  - {fileID: 1644284344}
+  - {fileID: 2147018749}
+  PuzzleCollider: {fileID: 910839013}
+--- !u!4 &911330588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911330586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 74.38725, y: -3.8755903, z: -13.918051}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &921629118
 GameObject:
@@ -5661,7 +5691,7 @@ GameObject:
   - component: {fileID: 1020942900}
   - component: {fileID: 1020942902}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Controller3
   m_TagString: PuzzleTrigger3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5772,11 +5802,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a6f75b85fc2d4bb495da0aae3115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzlePlatform1: {fileID: 1218692104}
-  puzzlePlatform2: {fileID: 384385653}
-  puzzlePlatform3: {fileID: 1883761537}
-  puzzlePlatform4: {fileID: 1327871028}
-  puzzlePlatform5: {fileID: 1989480496}
+  platform1: {fileID: 1109558269}
+  platform2: {fileID: 2147018749}
 --- !u!1 &1028054917
 GameObject:
   m_ObjectHideFlags: 0
@@ -5805,6 +5832,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1902919476}
+  - {fileID: 1234421453}
+  - {fileID: 1109558267}
+  - {fileID: 1644284342}
+  - {fileID: 2147018747}
   - {fileID: 1218692105}
   - {fileID: 384385654}
   - {fileID: 1883761538}
@@ -6051,8 +6083,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1883761538}
-  m_RootOrder: 0
+  m_Father: {fileID: 1028054918}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
 --- !u!212 &1109558268
 SpriteRenderer:
@@ -6118,8 +6150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac4445c8b1194b49ab1d263d9fc4f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleCollider: {fileID: 910839014}
-  platformIndex: 2
+  desiredRotation: 0
 --- !u!1 &1120514688
 GameObject:
   m_ObjectHideFlags: 0
@@ -7013,7 +7044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1218692105
 Transform:
   m_ObjectHideFlags: 0
@@ -7025,10 +7056,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1902919476}
+  m_Children: []
   m_Father: {fileID: 1028054918}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1233921196
 GameObject:
@@ -7139,13 +7169,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234421452}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -9.25, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 384385654}
-  m_RootOrder: 0
+  m_Father: {fileID: 1028054918}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &1234421454
 SpriteRenderer:
@@ -7211,8 +7241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac4445c8b1194b49ab1d263d9fc4f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleCollider: {fileID: 910839014}
-  platformIndex: 1
+  desiredRotation: 0
 --- !u!1 &1244676291
 GameObject:
   m_ObjectHideFlags: 0
@@ -7480,7 +7509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1327871029
 Transform:
   m_ObjectHideFlags: 0
@@ -7492,10 +7521,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1644284342}
+  m_Children: []
   m_Father: {fileID: 1028054918}
-  m_RootOrder: 3
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1354112197
 GameObject:
@@ -7695,7 +7723,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1905145567}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1387201782
 SpriteRenderer:
@@ -8901,8 +8929,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1327871029}
-  m_RootOrder: 0
+  m_Father: {fileID: 1028054918}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1644284343
 SpriteRenderer:
@@ -8968,8 +8996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac4445c8b1194b49ab1d263d9fc4f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleCollider: {fileID: 910839014}
-  platformIndex: 3
+  desiredRotation: 0
 --- !u!1 &1649419868
 GameObject:
   m_ObjectHideFlags: 0
@@ -9270,7 +9297,7 @@ GameObject:
   - component: {fileID: 1695526399}
   - component: {fileID: 1695526401}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Controller5
   m_TagString: PuzzleTrigger5
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9381,11 +9408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a6f75b85fc2d4bb495da0aae3115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzlePlatform1: {fileID: 1218692104}
-  puzzlePlatform2: {fileID: 384385653}
-  puzzlePlatform3: {fileID: 1883761537}
-  puzzlePlatform4: {fileID: 1327871028}
-  puzzlePlatform5: {fileID: 1989480496}
+  platform1: {fileID: 1234421455}
+  platform2: {fileID: 2147018749}
 --- !u!1 &1704722515
 GameObject:
   m_ObjectHideFlags: 0
@@ -9469,6 +9493,111 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1482466519}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1705798559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705798562}
+  - component: {fileID: 1705798561}
+  - component: {fileID: 1705798560}
+  m_Layer: 0
+  m_Name: MCheongi_Idle1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!95 &1705798560
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705798559}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5e8aea32d3a195d4299376786b57f555, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!212 &1705798561
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705798559}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: d3432019b6ccdb84a90330405a3120e9, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.9, y: 2.23}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1705798562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705798559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 110.5, y: -6.343, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1720381559
 GameObject:
@@ -9584,7 +9713,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1905145567}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1775299966
 SpriteRenderer:
@@ -9999,12 +10128,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834524514}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.900002, y: 0, z: 0}
+  m_LocalPosition: {x: 99.31, y: -9.1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1905145567}
-  m_RootOrder: 4
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1834524516
 SpriteRenderer:
@@ -10325,7 +10454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1883761538
 Transform:
   m_ObjectHideFlags: 0
@@ -10337,10 +10466,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1109558267}
+  m_Children: []
   m_Father: {fileID: 1028054918}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1898669035
 GameObject:
@@ -10456,7 +10584,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1218692105}
+  m_Father: {fileID: 1028054918}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1902919477
@@ -10523,8 +10651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac4445c8b1194b49ab1d263d9fc4f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleCollider: {fileID: 910839014}
-  platformIndex: 0
+  desiredRotation: 0
 --- !u!1 &1905145566
 GameObject:
   m_ObjectHideFlags: 0
@@ -10557,7 +10684,6 @@ Transform:
   - {fileID: 1123407101}
   - {fileID: 886350729}
   - {fileID: 130849358}
-  - {fileID: 1834524515}
   - {fileID: 1387201781}
   - {fileID: 1775299965}
   - {fileID: 865281824}
@@ -10945,7 +11071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1989480497
 Transform:
   m_ObjectHideFlags: 0
@@ -10957,10 +11083,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2147018747}
+  m_Children: []
   m_Father: {fileID: 1028054918}
-  m_RootOrder: 4
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2002405698
 GameObject:
@@ -11422,7 +11547,7 @@ GameObject:
   - component: {fileID: 2052102024}
   - component: {fileID: 2052102026}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Controller1
   m_TagString: PuzzleTrigger1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11533,11 +11658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a6f75b85fc2d4bb495da0aae3115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzlePlatform1: {fileID: 1218692104}
-  puzzlePlatform2: {fileID: 384385653}
-  puzzlePlatform3: {fileID: 1883761537}
-  puzzlePlatform4: {fileID: 1327871028}
-  puzzlePlatform5: {fileID: 1989480496}
+  platform1: {fileID: 1902919478}
+  platform2: {fileID: 1109558269}
 --- !u!1 &2062357528
 GameObject:
   m_ObjectHideFlags: 0
@@ -11887,7 +12009,7 @@ GameObject:
   - component: {fileID: 2109690465}
   - component: {fileID: 2109690467}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Controller4
   m_TagString: PuzzleTrigger4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11998,11 +12120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a6f75b85fc2d4bb495da0aae3115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzlePlatform1: {fileID: 1218692104}
-  puzzlePlatform2: {fileID: 384385653}
-  puzzlePlatform3: {fileID: 1883761537}
-  puzzlePlatform4: {fileID: 1327871028}
-  puzzlePlatform5: {fileID: 1989480496}
+  platform1: {fileID: 1902919478}
+  platform2: {fileID: 1644284344}
 --- !u!1 &2110496417
 GameObject:
   m_ObjectHideFlags: 0
@@ -12285,8 +12404,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1989480497}
-  m_RootOrder: 0
+  m_Father: {fileID: 1028054918}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2147018748
 SpriteRenderer:
@@ -12352,5 +12471,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac4445c8b1194b49ab1d263d9fc4f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleCollider: {fileID: 910839014}
-  platformIndex: 4
+  desiredRotation: 0

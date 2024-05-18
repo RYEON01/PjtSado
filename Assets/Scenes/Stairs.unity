@@ -2075,9 +2075,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce806f30bd92aa47b0bf7a3bd54acf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0
   maxSpeed: 10
   slopeForce: 0
   raycastLength: 1.2
+  chorangTransform: {fileID: 1528722373}
+  chorangOffsetX: -1.2
+  collidedObject: {fileID: 0}
 --- !u!1 &394178959
 GameObject:
   m_ObjectHideFlags: 0
