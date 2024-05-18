@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
+    
     public static PuzzleManager Instance { get; private set; } // Singleton instance
-
-    public List<PuzzlePlatform> puzzlePlatforms; // List of all PuzzlePlatform instances
+    public PuzzlePlatform[] platforms; // Array of all PuzzlePlatform instances
+    public GameObject PuzzleCollider;
 
     private void Awake()
     {
@@ -23,21 +24,22 @@ public class PuzzleManager : MonoBehaviour
 
     public bool CheckSolution()
     {
-        // Assume the puzzle is not solved until proven otherwise
-        bool isSolved = false;
+        bool isSolved = true; // Assume the puzzle is solved until proven otherwise
 
-        // Check each platform's rotation
-        foreach (var puzzlePlatform in puzzlePlatforms)
+        foreach (var platform in platforms)
         {
-            if (puzzlePlatform.GetCurrentRotation() == 0 || puzzlePlatform.GetCurrentRotation() == 360)
+            if (!platform.IsSuccess())
             {
-                isSolved = true;
+                isSolved = false; // Puzzle is not solved
+                Debug.Log("Puzzle not solved yet. Further interactions allowed.");
+                break;
             }
-            else
-            {
-                isSolved = false;
-                break; // No need to check further, exit the loop
-            }
+        }
+
+        if (isSolved)
+        {
+            Debug.Log("Puzzle solved! No further interactions allowed.");
+            PuzzleCollider.SetActive(false); // Disable the PuzzleCollider
         }
 
         return isSolved;
