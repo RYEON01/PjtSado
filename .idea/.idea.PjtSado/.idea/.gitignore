@@ -17,6 +17,9 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+/[Ll]ogs/
+/[Bb]uild/
+/[Bb]uilds/
 /[Uu]ser[Ss]ettings/
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
