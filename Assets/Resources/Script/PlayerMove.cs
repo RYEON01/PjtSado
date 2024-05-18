@@ -1,101 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public bool isColliding;
-    bool hasLoggedOverlap = false;
-    public float maxSpeed;
-    public float slopeForce;
-    public float raycastLength;
-    public Transform chorangTransform;
-    public float chorangOffsetX;
-    Rigidbody2D rigid;
-    SpriteRenderer spriteRenderer;
-    Animator anim;
-    bool isGrounded;
-    SpriteRenderer chorangSpriteRenderer;
-    private List<GameObject> collidedObjects = new List<GameObject>();
-    private bool canInteract = true;
+    public float maxSpeed, slopeForce, raycastLength;
+    private Rigidbody2D rigid;
+    private bool isGrounded;
 
-    void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        chorangSpriteRenderer = chorangTransform.GetComponent<SpriteRenderer>();
-    }
+    void Awake() => rigid = GetComponent<Rigidbody2D>();
 
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
+        rigid.velocity = new Vector2((isGrounded && h == 0) ? 0f : h * maxSpeed, rigid.velocity.y);
+    }
 
-        if (isGrounded && h == 0)
+    void FixedUpdate()
+    {
+        float h = Input.GetAxisRaw("Horizontal");
+        // Cast the raycast in the direction the player is moving
+        Vector2 raycastDirection = new Vector2(h, -1).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, raycastLength);
+        isGrounded = hit.collider != null;
+
+        if(isGrounded && Vector2.Angle(hit.normal, Vector2.up) <= 45)
         {
-            rigid.velocity = new Vector2(0f, rigid.velocity.y);
+            // Project the player's velocity onto the slope's normal vector
+            Vector2 velocityPerpendicularToSlope = Vector2.Dot(rigid.velocity, hit.normal) * hit.normal;
+            // Subtract this from the player's velocity to get the component of the velocity that is parallel to the slope
+            Vector2 velocityParallelToSlope = rigid.velocity - velocityPerpendicularToSlope;
+            // Set the player's velocity to this value
+            rigid.velocity = velocityParallelToSlope;
+        }
+
+        // If there is no keydown, set the player's horizontal velocity to zero
+        if (h == 0)
+        {
+            rigid.velocity = new Vector2(0, rigid.velocity.y);
         }
         else
         {
             rigid.velocity = new Vector2(h * maxSpeed, rigid.velocity.y);
         }
-
-        if (h != 0)
-        {
-            spriteRenderer.flipX = h < 0;
-            chorangTransform.localPosition = new Vector3(spriteRenderer.flipX ? -chorangOffsetX : chorangOffsetX,
-                chorangTransform.localPosition.y, chorangTransform.localPosition.z);
-            chorangSpriteRenderer.flipX = spriteRenderer.flipX;
-        }
-
-        anim.SetBool("isWalking", h != 0);
-
-        if (collidedObjects.Count > 0 && Input.GetKeyDown(KeyCode.E) && canInteract)
-        {
-            PuzzleController puzzleController = collidedObjects[collidedObjects.Count - 1].GetComponent<PuzzleController>();
-            if (puzzleController != null && !puzzleController.IsInteracting() && !PuzzleManager.Instance.CheckSolution())
-            {
-                StartCoroutine(puzzleController.HandleInteraction());
-            }
-        }
-    }
-
-    void FixedUpdate()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, raycastLength);
-        isGrounded = hit.collider != null;
-
-        if(isGrounded) {
-            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-            if(slopeAngle > 0 && slopeAngle <= 45) {
-                Vector2 slopeForceDirection = Vector2.Perpendicular(hit.normal).normalized * -Mathf.Sign(hit.normal.x);
-                rigid.AddForce(slopeForceDirection * slopeForce, ForceMode2D.Force);
-            }
-        }
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.isTrigger && !collidedObjects.Contains(other.gameObject))
-        {
-            collidedObjects.Add(other.gameObject);
-            hasLoggedOverlap = true;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.isTrigger)
-        {
-            collidedObjects.Remove(other.gameObject);
-            hasLoggedOverlap = false;
-        }
-    }
-    
-    IEnumerator InteractionCooldown(float duration)
-    {
-        canInteract = false;
-        yield return new WaitForSeconds(duration);
-        canInteract = true;
     }
 }

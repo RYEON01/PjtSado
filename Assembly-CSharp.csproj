@@ -45,6 +45,7 @@
      <Compile Include="Assets\Resources\Script\PlayerMove.cs" />
      <Compile Include="Assets\Resources\Script\PuzzleController.cs" />
      <Compile Include="Assets\Resources\Script\PuzzleManager.cs" />
+     <Compile Include="Assets\Resources\Script\PlayerInteraction.cs" />
      <Folder Include="Assets" />
      <Folder Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime" />
      <Folder Include="Assets\Resources\Script" />

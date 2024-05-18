@@ -9,6 +9,7 @@ TagManager:
   - PuzzleTrigger3
   - PuzzleTrigger4
   - PuzzleTrigger5
+  - Platform
   layers:
   - Default
   - TransparentFX
