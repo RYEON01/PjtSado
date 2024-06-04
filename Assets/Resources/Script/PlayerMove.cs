@@ -19,7 +19,8 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         // Cast the raycast in the direction the player is moving
         Vector2 raycastDirection = new Vector2(h, -1).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, raycastLength);
+        int layerMask = (1 << LayerMask.NameToLayer("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, raycastLength, layerMask);
         isGrounded = hit.collider != null;
 
         if(isGrounded && Vector2.Angle(hit.normal, Vector2.up) <= 45)

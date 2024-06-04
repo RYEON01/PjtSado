@@ -10,16 +10,17 @@ TagManager:
   - PuzzleTrigger4
   - PuzzleTrigger5
   - Platform
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Confiner
   - Water
   - UI
   - Map
-  - 
-  - 
+  - Player
+  - Ground
   - 
   - 
   - 

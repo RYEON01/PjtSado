@@ -46,6 +46,7 @@
      <Compile Include="Assets\Resources\Script\PlayerInteraction.cs" />
      <Compile Include="Assets\Resources\Script\PuzzleController.cs" />
      <Compile Include="Assets\Resources\Script\PuzzleManager.cs" />
+     <Compile Include="Assets\Resources\Script\SceneManagement.cs" />
      <Folder Include="Assets" />
      <Folder Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime" />
      <Folder Include="Assets\Resources\Script" />
@@ -391,6 +392,7 @@
      <Folder Include="Library\PackageCache\com.unity.2d.spriteshape@7.0.6\Tests" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\semantic.zh-Hans.txt" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\i3.ko.txt" />
+     <Folder Include="Assets\Resources\Map\BJuon" />
      <Folder Include="Library\PackageCache\com.unity.2d.psdimporter@6.0.7\Tests" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\guihelp.ko.txt" />
      <None Include="Library\PackageCache\com.unity.ide.vscode@1.2.5\package.json" />
