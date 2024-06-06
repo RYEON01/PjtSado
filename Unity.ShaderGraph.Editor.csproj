@@ -279,9 +279,9 @@
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Util\PooledList.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Drawing\Interfaces\ISGControlledElement.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Drawing\Inspector\PropertyDrawers\CustomFunctionNodePropertyDrawer.cs" />
-     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\ParentGroupChange.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Input\Scene\ScreenNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\DataStore.cs" />
+     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\ParentGroupChange.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\CategoryData.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Utility\Logic\OrNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Math\Wave\SquareWaveNode.cs" />
@@ -475,8 +475,8 @@
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\AssetCallbacks\CreateShaderSubGraph.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\GroupData.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Input\Texture\ProceduralVirtualTextureNode.cs" />
-     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Drawing\Interfaces\IResizable.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Generation\Targets\BuiltIn\Editor\ShaderGUI\BuiltInLitGUI.cs" />
+     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Drawing\Interfaces\IResizable.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\ViewDirectionMaterialSlot.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Input\Gradient\SampleGradientNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\ShaderGUI\GenericShaderGraphMaterialGUI.cs" />
@@ -570,8 +570,8 @@
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Drawing\Inspector\PropertyDrawers\Vector2PropertyDrawer.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Generation\Collections\AssetCollection.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\GuidEncoder.cs" />
-     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Util\ValueUtilities.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Interfaces\Graph\IOnAssetEnabled.cs" />
+     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Util\ValueUtilities.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Input\Basic\Vector3Node.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\GeometryNode.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Nodes\Math\Trigonometry\HyperbolicSineNode.cs" />
@@ -647,8 +647,8 @@
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Drawing\Colors\PrecisionColors.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\UVMaterialSlot.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\SamplerStateMaterialSlot.cs" />
-     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Generation\Controls.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Serialization\SerializationExtensions.cs" />
+     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Generation\Controls.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Legacy\SerializableGuid.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Graphs\DynamicMatrixMaterialSlot.cs" />
      <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.10\Editor\Data\Interfaces\NeededCoordinateSpace.cs" />

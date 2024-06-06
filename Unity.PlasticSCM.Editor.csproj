@@ -94,8 +94,8 @@
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\UI\DrawSearchField.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\Gluon\ProgressOperationHandler.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\Views\PendingChanges\Changelists\MoveToChangelistMenuBuilder.cs" />
-     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\UI\EditorVersion.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\Views\Branch\BranchesSelection.cs" />
+     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\UI\EditorVersion.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\Help\HelpData.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\UI\GetPlasticShortcut.cs" />
      <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Editor\PlasticSCM\UI\GUISpace.cs" />

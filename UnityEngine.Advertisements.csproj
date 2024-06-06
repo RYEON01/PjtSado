@@ -55,8 +55,8 @@
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\Advertisement.cs" />
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\Purchasing\IPurchase.cs" />
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\Enums\UnityAdsLoadError.cs" />
-     <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\IBanner.cs" />
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\Enums\UnityAdsShowCompletionState.cs" />
+     <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\IBanner.cs" />
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\Purchasing\PurchasingPlatform.cs" />
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\Platform\IPlatform.cs" />
      <Compile Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime\Advertisement\BannerLoadOptions.cs" />

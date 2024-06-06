@@ -8,9 +8,11 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
 
-    public GameObject dialogueUI;
+    private GameObject dialogueUI;
     public TMP_Text nameText;
     public TMP_Text dialogueText;
+    public TMP_Text tutorialText;
+    private Dialogue currentDialogue;
 
     private Queue<string> sentences;
     private bool isDialogueActive;
@@ -32,14 +34,24 @@ public class DialogueManager : MonoBehaviour
         playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, GameObject dialogueUI, Image chaImage)
     {
+        currentDialogue = dialogue;
+        this.dialogueUI = dialogueUI;
+    
         if (dialogueUI != null && nameText != null && dialogueText != null && dialogue != null)
         {
             dialogueUI.SetActive(true);
             isDialogueActive = true;
-
-            nameText.text = dialogue.name;
+            
+            nameText.text = dialogue.chaName; // Update this line
+            chaImage.gameObject.SetActive(true);
+            
+            DialogueTrigger dialogueTrigger = dialogueUI.GetComponent<DialogueTrigger>();
+            if (dialogueTrigger != null && dialogueTrigger.chaImage != null)
+            {
+                dialogueTrigger.chaImage.gameObject.SetActive(true);
+            }
 
             sentences.Clear();
 
@@ -47,6 +59,8 @@ public class DialogueManager : MonoBehaviour
             {
                 sentences.Enqueue(sentence);
             }
+        
+            tutorialText.gameObject.SetActive(true);
 
             DisplayNextSentence();
             playerMove.SetPlayerMovement(false);
@@ -67,6 +81,11 @@ public class DialogueManager : MonoBehaviour
 
         string sentence = sentences.Dequeue();
         dialogueText.text = sentence;
+
+        if (sentences.Count == currentDialogue.sentences.Count - 2) // Use currentDialogue here
+        {
+            tutorialText.gameObject.SetActive(false); // Hide the tutorial text
+        }
     }
 
     private void EndDialogue()
@@ -74,12 +93,18 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(false);
         isDialogueActive = false;
         
+        DialogueTrigger dialogueTrigger = dialogueUI.GetComponent<DialogueTrigger>();
+        if (dialogueTrigger != null && dialogueTrigger.chaImage != null)
+        {
+            dialogueTrigger.chaImage.gameObject.SetActive(false);
+        }
+        
         playerMove.SetPlayerMovement(true);
     }
 
     private void Update()
     {
-        if (isDialogueActive && Input.GetKeyDown(KeyCode.F))
+        if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
         {
             DisplayNextSentence();
         }
