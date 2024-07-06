@@ -87,6 +87,11 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\Resources\Script\DialogueManager.cs" />
+     <Compile Include="Assets\Resources\Script\CameraSwitcher.cs" />
+     <Compile Include="Assets\Resources\Script\InteractionHintController.cs" />
+     <Compile Include="Assets\Resources\Script\PuzzlePlatformMover.cs" />
+     <Compile Include="Assets\Resources\Script\PuzzleControllerMover.cs" />
+     <Compile Include="Assets\Resources\Script\PuzzleManagerMover.cs" />
      <Folder Include="Assets" />
      <Folder Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime" />
      <Folder Include="Assets\Resources\Script" />
@@ -120,6 +125,7 @@
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\images.es.txt" />
      <None Include="Library\PackageCache\com.unity.inputsystem@1.5.1\package.json" />
      <None Include="Library\PackageCache\com.unity.modules.ai@1.0.0\package.json" />
+     <Folder Include="Assets\Resources\Map\EStairway\Old Files" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\differences.es.txt" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\commontypes.zh-Hans.txt" />
      <Folder Include="Library\PackageCache\com.unity.2d.tilemap.extras@2.2.4" />
@@ -128,6 +134,7 @@
      <None Include="Library\PackageCache\com.unity.inputsystem@1.5.1\ValidationConfig.json" />
      <None Include="Library\PackageCache\com.unity.postprocessing@3.2.2\PostProcessing\Shaders\Builtins\Texture3DLerp.compute" />
      <None Include="Library\PackageCache\com.unity.ugui@1.0.0\package.json" />
+     <Folder Include="Assets\Resources\Map\Common" />
      <Folder Include="Library\PackageCache\com.unity.postprocessing@3.2.2\PostProcessing\Shaders\Debug" />
      <None Include="Library\PackageCache\com.unity.postprocessing@3.2.2\PostProcessing\Shaders\Builtins\DeferredFog.shader" />
      <Folder Include="Library\PackageCache\com.unity.modules.xr@1.0.0" />
@@ -185,6 +192,7 @@
      <Folder Include="Library\PackageCache\com.unity.purchasing@4.5.2\Plugins\UnityPurchasing\unitypurchasing.bundle\Contents" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
      <Folder Include="Library\PackageCache\com.unity.ads@3.7.5\Tests" />
+     <Folder Include="Assets\Resources\UI" />
      <None Include="Library\PackageCache\com.unity.timeline@1.6.4\package.json" />
      <Folder Include="Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom" />
      <None Include="Library\PackageCache\com.unity.postprocessing@3.2.2\PostProcessing\Shaders\API\PSSL.hlsl" />
@@ -566,7 +574,6 @@
      <None Include="Library\PackageCache\com.unity.render-pipelines.high-definition@12.1.10\ValidationConfig.json" />
      <Folder Include="Library\PackageCache\com.unity.2d.spriteshape@7.0.6\Tests" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-     <Folder Include="Assets\Scenes\Stairs" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\semantic.zh-Hans.txt" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\i3.ko.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />

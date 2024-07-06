@@ -6,7 +6,7 @@ public class PuzzlePlatform : MonoBehaviour
 {
     
     public float desiredRotation = 0f; // Desired rotation in degrees
-    private float rotationSpeed = 90f; // Rotation speed in degrees per second
+    private float rotationSpeed = 180f; // Rotation speed in degrees per second
 
     // Rotate the platform by a certain angle
     public IEnumerator RotatePlatform(float angle)

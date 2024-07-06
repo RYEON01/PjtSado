@@ -37,9 +37,15 @@ public class PlayerInteraction : MonoBehaviour
         if (collidedObjects.Count > 0 && Input.GetKeyDown(KeyCode.E) && canInteract)
         {
             PuzzleController puzzleController = collidedObjects[collidedObjects.Count - 1].GetComponent<PuzzleController>();
+            PuzzleControllerMover puzzleControllerMover = collidedObjects[collidedObjects.Count - 1].GetComponent<PuzzleControllerMover>();
+
             if (puzzleController != null && !puzzleController.IsInteracting() && !PuzzleManager.Instance.CheckSolution())
             {
                 StartCoroutine(puzzleController.HandleInteraction());
+            }
+            else if (puzzleControllerMover != null && !puzzleControllerMover.IsInteracting() && !PuzzleManagerMover.Instance.CheckSolution())
+            {
+                StartCoroutine(puzzleControllerMover.HandleInteraction());
             }
         }
     }
