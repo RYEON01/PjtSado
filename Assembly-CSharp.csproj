@@ -451,6 +451,7 @@
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\ValidationConfig.json" />
      <Folder Include="Assets\TextMesh Pro\Examples &amp; Extras\Scenes" />
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\images.ja.txt" />
+     <Folder Include="Assets\Resources\Map\BBaeka" />
      <Folder Include="Library\PackageCache\com.unity.ide.vscode@1.2.5" />
      <Folder Include="Library\PackageCache\com.unity.modules.vehicles@1.0.0" />
      <Folder Include="Library\PackageCache\com.unity.purchasing@4.5.2\Plugins\UnityPurchasing" />
