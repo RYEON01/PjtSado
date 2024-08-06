@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: f9527c19d4db17440a8a1d06a6d544eb
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Gowun Batang
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 95fb0ca61b56758419b80160de3abba2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

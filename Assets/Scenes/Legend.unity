@@ -332,21 +332,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueLines:
-  - "\uCC9C\uC9C0\uC2E0\uBA85\uC758 \uC124\uACC4 \uC544\uB798 \uACE0\uB3C4\uD654\uB41C
-    \uAE30\uACC4\uACF5\uD559\uC73C\uB85C \uD53C\uC5B4\uB09C \uBB38\uBA85, \uBA85\uACC4"
-  - "\uC808\uB300\uC790\uAC00 \uC815\uAD50\uD788 \uC124\uACC4\uD55C \uC6B4\uBA85\uC758
-    \uC218\uB808\uBC14\uD034 \uC544\uB798 \uC778\uAC04\uC740 \uAC01\uAE30 \uB2EC\uB9AC
-    \uBC88\uC601\uD558\uC600\uC73C\uB098..."
-  - "\uC8FC\uC5B4\uC9C4 \uC219\uBA85\uC744 \uAC70\uBD80\uD558\uB294 \uC774\uB4E4
-    \uB610\uD55C \uC874\uC7AC\uD558\uC600\uC73C\uB9E4, \uC0AC\uB78C\uB4E4\uC740 \uC774\uB4E4\uC744
-    '\uC218\uB77C' \uB77C \uC77C\uCEEB\uB354\uB77C"
-  - "\uCD5C\uCD08\uC758 \uC218\uB77C \uCC9C\uC744\uC744 \uD544\uB450\uB85C \uC124\uB9BD\uB41C
-    \uC218\uB77C\uB294 \uC0DD\uBA85\uACF5\uD559\uC73C\uB85C \uC0DD\uC744 \uC774\uC5B4\uAC00\uB2C8"
-  - "\uC774\uC5D0 \uCC9C\uC9C0\uC2E0\uBA85, \uBD88\uD589\uD55C \uBA85\uC744 \uD0C0\uACE0\uB09C
-    \uBC94\uBD80 '\uC774\uB9E4'\uB97C \uBD88\uB7EC \uB9D0\uD558\uAC74\uB300"
+  - "\uCC9C\uC9C0\uC2E0\uBA85\uC758 \uC124\uACC4 \uC544\uB798 \uD53C\uC5B4\uB09C
+    \uBB38\uBA85, \uBA85\uACC4"
+  - "\uC774\uB4E4\uC758 \uADDC\uCE59\uC744 \uAC70\uC2A4\uB978 \uC0BF\uB41C \uAC83,
+    \uC218\uB77C"
+  - "\uBA85\uACC4\uC758 \uBC94\uBD80... \uC774\uB9E4\uC5EC"
   - "\uB0B4 \uB108\uB97C \uAD7D\uC5B4\uC0B4\uD53C\uC5B4 \uBA85\uD558\uAC74\uB300,
     \uB098\uC758 \uAC70\uB8E9\uD55C \uC0AC\uB3C4\uB85C\uC11C \uC218\uB77C\uB97C \uBA78\uD558\uB77C-"
-  nextSceneName: Stairs
+  nextSceneName: Birth
 --- !u!1 &1105795639
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +419,7 @@ GameObject:
   - component: {fileID: 1205031727}
   - component: {fileID: 1205031726}
   - component: {fileID: 1205031725}
+  - component: {fileID: 1205031728}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -477,8 +471,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -499,6 +493,131 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1205031728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205031724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c1ce4fb46143f46bc5cb5224c934f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearColorMode: 0
+  backgroundColorHDR: {r: 0.025, g: 0.07, b: 0.19, a: 0}
+  clearDepth: 1
+  volumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  volumeAnchorOverride: {fileID: 0}
+  antialiasing: 0
+  SMAAQuality: 2
+  dithering: 0
+  stopNaNs: 0
+  taaSharpenStrength: 0.5
+  TAAQuality: 1
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
+  taaBaseBlendFactor: 0.875
+  taaJitterScale: 1
+  physicalParameters:
+    m_Iso: 200
+    m_ShutterSpeed: 0.005
+    m_Aperture: 16
+    m_FocusDistance: 10
+    m_BladeCount: 5
+    m_Curvature: {x: 2, y: 11}
+    m_BarrelClipping: 0.25
+    m_Anamorphism: 0
+  flipYMode: 0
+  xrRendering: 1
+  fullscreenPassthrough: 0
+  allowDynamicResolution: 0
+  customRenderingSettings: 0
+  invertFaceCulling: 0
+  probeLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  hasPersistentHistory: 0
+  allowDeepLearningSuperSampling: 1
+  deepLearningSuperSamplingUseCustomQualitySettings: 0
+  deepLearningSuperSamplingQuality: 0
+  deepLearningSuperSamplingUseCustomAttributes: 0
+  deepLearningSuperSamplingUseOptimalSettings: 1
+  deepLearningSuperSamplingSharpening: 0
+  exposureTarget: {fileID: 0}
+  materialMipBias: 0
+  m_RenderingPathCustomFrameSettings:
+    bitDatas:
+      data1: 72198260625768269
+      data2: 13763000477350330392
+    lodBias: 1
+    lodBiasMode: 0
+    lodBiasQualityLevel: 0
+    maximumLODLevel: 0
+    maximumLODLevelMode: 0
+    maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
+    msaaMode: 1
+    materialQuality: 0
+  renderingPathCustomFrameSettingsOverrideMask:
+    mask:
+      data1: 0
+      data2: 0
+  defaultFrameSettings: 0
+  m_Version: 8
+  m_ObsoleteRenderingPath: 0
+  m_ObsoleteFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
 --- !u!1 &1214027271
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,8 +755,8 @@ MonoBehaviour:
   m_text: "\uCC9C\uC9C0\uC2E0\uBA85\uC758 \uC124\uACC4 \uC544\uB798 \uACE0\uB3C4\uD654\uB41C
     \uAE30\uACC4\uACF5\uD559\uC73C\uB85C \uD53C\uC5B4\uB09C \uBB38\uBA85, \uBA85\uACC4.\r\n\r"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a0a425856f5ad084fbab3624c39bae79, type: 2}
-  m_sharedMaterial: {fileID: -6276814947807861954, guid: a0a425856f5ad084fbab3624c39bae79, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
+  m_sharedMaterial: {fileID: -7558334978220188321, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
