@@ -73,7 +73,7 @@ public class ElementAssigner : MonoBehaviour
         return element;
     }
     
-    public void Assign10and12(int selectedYear, int selectedMonth, int selectedDate, string selectedTime)
+    public BattleCharacter Assign10and12(int selectedYear, int selectedMonth, int selectedDate, string selectedTime)
     {
         int year10 = (selectedYear % 10);
         int year12 = selectedYear % 12;
@@ -101,6 +101,30 @@ public class ElementAssigner : MonoBehaviour
         Debug.Log("DateB: " + dateB);
         Debug.Log("TimeA: " + timeA);
         Debug.Log("TimeB: " + timeB);
+        
+        BattleCharacter character = new BattleCharacter();
+        character.WoodElement = CountElement(FiveElements.Wood, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
+        character.FireElement = CountElement(FiveElements.Fire, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
+        character.EarthElement = CountElement(FiveElements.Earth, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
+        character.MetalElement = CountElement(FiveElements.Metal, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
+        character.WaterElement = CountElement(FiveElements.Water, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
+        return character;
+    }
+    
+    public int CountElement(FiveElements element, FiveElements yearA, FiveElements yearB, FiveElements monthA, FiveElements monthB, FiveElements dateA, FiveElements dateB, FiveElements timeA, FiveElements timeB)
+    {
+        int count = 0;
+
+        if (element == yearA || element == yearB)
+            count++;
+        if (element == monthA || element == monthB)
+            count++;
+        if (element == dateA || element == dateB)
+            count++;
+        if (element == timeA || element == timeB)
+            count++;
+
+        return count;
     }
     
     public int CalculateMonth10(int selectedMonth, int year10)

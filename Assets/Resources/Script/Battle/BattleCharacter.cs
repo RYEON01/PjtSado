@@ -12,6 +12,12 @@ public class BattleCharacter : MonoBehaviour
     public int Metal { get; set; }
     public int HP { get; set; }
     
+    public int WoodElement { get; set; }
+    public int FireElement { get; set; }
+    public int EarthElement { get; set; }
+    public int MetalElement { get; set; }
+    public int WaterElement { get; set; }
+    
     void Awake()
     {
         if (Name == "Imae") // Replace "Player" with the name of your player character

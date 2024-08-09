@@ -90,6 +90,10 @@ public class BirthBasics : MonoBehaviour
         Debug.Log("Selected Month: " + selectedMonth);
         Debug.Log("Selected Date: " + selectedDate);
         Debug.Log("Selected Time: " + selectedTime);
+        
+        BattleCharacter character = elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
+        BattlePlayingSystem battleSystem = new BattlePlayingSystem(character, new BattleCharacter());
+        GameManager.Instance.BattleSystem = battleSystem;
     }
 
     void PopulateYearDropdown()
