@@ -86,14 +86,10 @@ public class BirthBasics : MonoBehaviour
         
         elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
         
-        Debug.Log("Selected Year: " + selectedYear);
-        Debug.Log("Selected Month: " + selectedMonth);
-        Debug.Log("Selected Date: " + selectedDate);
-        Debug.Log("Selected Time: " + selectedTime);
-        
-        BattleCharacter character = elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
-        BattlePlayingSystem battleSystem = new BattlePlayingSystem(character, new BattleCharacter());
-        GameManager.Instance.BattleSystem = battleSystem;
+        BattleCharacter.Instance = elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
+        GameManager.Instance.BattleSystem.Player = BattleCharacter.Instance;
+        GameManager.Instance.BattleSystem.Enemy = BattleCharacter.Instance;
+        BattleCharacter.Instance.SaveStats();
     }
 
     void PopulateYearDropdown()
@@ -212,10 +208,6 @@ public class BirthBasics : MonoBehaviour
             int lunarYear = calendar.GetYear(new DateTime(year, month, day));
             int lunarMonth = calendar.GetMonth(new DateTime(year, month, day));
             int lunarDay = calendar.GetDayOfMonth(new DateTime(year, month, day));
-
-            Debug.Log("Lunar Year: " + lunarYear);
-            Debug.Log("Lunar Month: " + lunarMonth);
-            Debug.Log("Lunar Day: " + lunarDay);
         }
         catch (ArgumentOutOfRangeException e)
         {

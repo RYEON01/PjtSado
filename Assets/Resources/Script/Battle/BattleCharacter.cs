@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BattleCharacter : MonoBehaviour
 {
+    public static BattleCharacter Instance { get; set; }
+    public bool StatsInitialized { get; private set; }
+    private static bool hasInitialized = false; // Add this line
+    
     public string Name { get; set; }
     public int Water { get; set; }
     public int Fire { get; set; }
@@ -18,23 +22,47 @@ public class BattleCharacter : MonoBehaviour
     public int MetalElement { get; set; }
     public int WaterElement { get; set; }
     
+    public int WaterStat { get; set; }
+    public int FireStat { get; set; }
+    public int EarthStat { get; set; }
+    public int WoodStat { get; set; }
+    public int MetalStat { get; set; }
+    
     void Awake()
     {
-        if (Name == "Imae") // Replace "Player" with the name of your player character
+        if (Instance == null)
         {
+            Instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        if (!hasInitialized && WaterStat == 0 && FireStat == 0 && EarthStat == 0 && WoodStat == 0 && MetalStat == 0)
+        {
             SetInitialStats();
+            StatsInitialized = true;
+            hasInitialized = true;
         }
     }
 
     public void SetInitialStats()
     {
-        Water = 5 * Random.Range(1, 10) + 5;
-        Fire = 5 * Random.Range(1, 10) + 5;
-        Earth = 5 * Random.Range(1, 10) + 5;
-        Wood = 5 * Random.Range(1, 10) + 5;
-        Metal = 5 * Random.Range(1, 10) + 5;
+        WaterStat = 10 * Random.Range(0, 4) + 10;
+        FireStat = 10 * Random.Range(0, 4) + 10;
+        EarthStat = 10 * Random.Range(0, 4) + 10;
+        WoodStat = 10 * Random.Range(0, 4) + 10;
+        MetalStat = 10 * Random.Range(0, 4) + 10;
         HP = 100;
+        
+        PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
+        if (pentagonGraph != null)
+        {
+            pentagonGraph.UpdateGraph(this);
+        }
+        StatsInitialized = true;
     }
     
     public int RollDice(string element)
@@ -59,5 +87,37 @@ public class BattleCharacter : MonoBehaviour
                 break;
         }
         return Random.Range(1, maxRoll + 1);
+    }
+    
+    public void SaveStats()
+    {
+        PlayerPrefs.SetInt("WaterStat", WaterStat);
+        PlayerPrefs.SetInt("FireStat", FireStat);
+        PlayerPrefs.SetInt("EarthStat", EarthStat);
+        PlayerPrefs.SetInt("WoodStat", WoodStat);
+        PlayerPrefs.SetInt("MetalStat", MetalStat);
+        PlayerPrefs.Save();
+    }
+    
+    public void LoadStats()
+    {
+        if (PlayerPrefs.HasKey("WaterStat"))
+        {
+            WaterStat = PlayerPrefs.GetInt("WaterStat");
+            FireStat = PlayerPrefs.GetInt("FireStat");
+            EarthStat = PlayerPrefs.GetInt("EarthStat");
+            WoodStat = PlayerPrefs.GetInt("WoodStat");
+            MetalStat = PlayerPrefs.GetInt("MetalStat");
+            
+            PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
+            if (pentagonGraph != null)
+            {
+                pentagonGraph.UpdateGraph(this);
+            }
+        }
+        else if (!StatsInitialized)
+        {
+            SetInitialStats();
+        }
     }
 }

@@ -92,22 +92,20 @@ public class ElementAssigner : MonoBehaviour
         FiveElements dateB = AssignElement(date12, false);
         FiveElements timeA = AssignElement(time10, true);
         FiveElements timeB = AssignElement(time12, false);
-
-        Debug.Log("YearA: " + yearA);
-        Debug.Log("YearB: " + yearB);
-        Debug.Log("MonthA: " + monthA);
-        Debug.Log("MonthB: " + monthB);
-        Debug.Log("DateA: " + dateA);
-        Debug.Log("DateB: " + dateB);
-        Debug.Log("TimeA: " + timeA);
-        Debug.Log("TimeB: " + timeB);
         
-        BattleCharacter character = new BattleCharacter();
+        BattleCharacter character = BattleCharacter.Instance;
         character.WoodElement = CountElement(FiveElements.Wood, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.FireElement = CountElement(FiveElements.Fire, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.EarthElement = CountElement(FiveElements.Earth, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.MetalElement = CountElement(FiveElements.Metal, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.WaterElement = CountElement(FiveElements.Water, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
+        
+        character.WaterStat = (character.WaterElement * 10) + 10;
+        character.FireStat = (character.FireElement * 10) + 10;
+        character.EarthStat = (character.EarthElement * 10) + 10;
+        character.WoodStat = (character.WoodElement * 10) + 10;
+        character.MetalStat = (character.MetalElement * 10) + 10;
+        
         return character;
     }
     

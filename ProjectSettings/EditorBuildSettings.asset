@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: 
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/Legend.unity
@@ -20,4 +20,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Juon.unity
     guid: 36189ec64ebb15b488351ab444b3d536
+  - enabled: 1
+    path: Assets/Scenes/Birth.unity
+    guid: aeaaa1609f3a06249ace86bf4a47621e
+  - enabled: 1
+    path: Assets/Scenes/Birth2.unity
+    guid: 5de371b747e960741bdb2a4dbc69e357
+  - enabled: 1
+    path: Assets/Scenes/Battle_C.unity
+    guid: fe6aa3b81aad8024bb6de36afb07f10d
+  - enabled: 1
+    path: Assets/Scenes/Baeka.unity
+    guid: 4cf040491b7851948ae203a42d4cf2c4
   m_configObjects: {}

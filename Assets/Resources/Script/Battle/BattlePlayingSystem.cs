@@ -8,7 +8,7 @@ public class BattlePlayingSystem : MonoBehaviour
     public BattleCharacter Enemy { get; set; }
     public bool IsPlayerTurn { get; set; }
 
-    public BattlePlayingSystem(BattleCharacter player, BattleCharacter enemy)
+    public void Initialize(BattleCharacter player, BattleCharacter enemy)
     {
         Player = player;
         Enemy = enemy;

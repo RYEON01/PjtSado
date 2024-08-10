@@ -9,8 +9,19 @@ public class SceneManagement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(sceneToLoad);
+            LoadScene();
         }
+    }
+
+    // This method can be called by a button click event
+    public void LoadSceneOnClick()
+    {
+        LoadScene();
+    }
+
+    private void LoadScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
  

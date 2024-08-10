@@ -6,6 +6,7 @@ public class BattleUIManager : MonoBehaviour
 {
     public BattleCharacter Player { get; set; }
     public BattleCharacter Enemy { get; set; }
+    public PentagonGraph PentagonGraph { get; set; }
 
     public BattleUIManager(BattleCharacter player, BattleCharacter enemy)
     {
@@ -16,6 +17,7 @@ public class BattleUIManager : MonoBehaviour
     // Placeholder for the method that will update the UI
     public void UpdateUI()
     {
-        // TODO: Implement this method
+        PentagonGraph.UpdateGraph(Player);
     }
+    
 }
