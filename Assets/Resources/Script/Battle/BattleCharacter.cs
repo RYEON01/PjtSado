@@ -1,12 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleCharacter : MonoBehaviour
 {
     public static BattleCharacter Instance { get; set; }
     public bool StatsInitialized { get; private set; }
-    private static bool hasInitialized = false; // Add this line
+    private static bool hasInitialized = false;
+    
+    public virtual string GetDialogue()
+    {
+        // Default dialogue
+        return "Default dialogue";
+    }
     
     public string Name { get; set; }
     public int Water { get; set; }
@@ -27,6 +31,8 @@ public class BattleCharacter : MonoBehaviour
     public int EarthStat { get; set; }
     public int WoodStat { get; set; }
     public int MetalStat { get; set; }
+    
+    public int Compassion { get; set; }
     
     void Awake()
     {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleUIManager : MonoBehaviour
@@ -18,6 +16,16 @@ public class BattleUIManager : MonoBehaviour
     public void UpdateUI()
     {
         PentagonGraph.UpdateGraph(Player);
+    }
+    
+    public void ShowDialogue(string dialogue)
+    {
+        // TODO: Show the dialogue on the UI
+    }
+
+    public void ShowAnswerChoices(string[] choices)
+    {
+        // TODO: Show the answer choices on the UI
     }
     
 }

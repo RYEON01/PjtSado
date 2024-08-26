@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleDialogue : MonoBehaviour
@@ -17,5 +15,11 @@ public class BattleDialogue : MonoBehaviour
     public void HandleDialogueTurn(string playerResponse)
     {
         // TODO: Adjust the enemy's compassion level based on the player's response
+    }
+    
+    public void StartDialogue()
+    {
+        string enemyDialogue = Enemy.GetDialogue();
+        // Display the enemy's dialogue
     }
 }
