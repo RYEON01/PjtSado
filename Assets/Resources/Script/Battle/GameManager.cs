@@ -14,19 +14,26 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    
-    void Start()
-    {
-        BattleSystem = gameObject.AddComponent<BattlePlayingSystem>();
+        BattleSystem = GetComponent<BattlePlayingSystem>();
+        if (BattleSystem == null)
+        {
+            BattleSystem = gameObject.AddComponent<BattlePlayingSystem>();
+        }
+        else
+        {
+            BattleSystem = GetComponent<BattlePlayingSystem>();
+        }
+
         BattleSystem.Initialize(BattleCharacter.Instance, BattleCharacter.Instance);
+        Player = BattleCharacter.Instance;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviour
             Player.SetInitialStats();
         }
     }
-    
+
     public void ConfirmStats()
     {
         Player.SaveStats();

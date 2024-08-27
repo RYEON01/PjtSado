@@ -3,12 +3,12 @@ using UnityEngine;
 public class BattleCharacter : MonoBehaviour
 {
     public static BattleCharacter Instance { get; set; }
+    public PentagonGraph PentagonGraph { get; set; }
     public bool StatsInitialized { get; private set; }
     private static bool hasInitialized = false;
     
     public virtual string GetDialogue()
     {
-        // Default dialogue
         return "Default dialogue";
     }
     
@@ -56,11 +56,11 @@ public class BattleCharacter : MonoBehaviour
 
     public void SetInitialStats()
     {
-        WaterStat = 10 * Random.Range(0, 4) + 10;
-        FireStat = 10 * Random.Range(0, 4) + 10;
-        EarthStat = 10 * Random.Range(0, 4) + 10;
-        WoodStat = 10 * Random.Range(0, 4) + 10;
-        MetalStat = 10 * Random.Range(0, 4) + 10;
+        WaterStat = 20;
+        FireStat = 30;
+        EarthStat = 40;
+        WoodStat = 20;
+        MetalStat = 20;
         HP = 100;
         
         PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
@@ -68,7 +68,9 @@ public class BattleCharacter : MonoBehaviour
         {
             pentagonGraph.UpdateGraph(this);
         }
+        
         StatsInitialized = true;
+        SaveStats();
     }
     
     public int RollDice(string element)
@@ -77,19 +79,19 @@ public class BattleCharacter : MonoBehaviour
         switch (element.ToLower())
         {
             case "water":
-                maxRoll = Water;
+                maxRoll = WaterStat;
                 break;
             case "fire":
-                maxRoll = Fire;
+                maxRoll = FireStat;
                 break;
             case "earth":
-                maxRoll = Earth;
+                maxRoll = EarthStat;
                 break;
             case "wood":
-                maxRoll = Wood;
+                maxRoll = WoodStat;
                 break;
             case "metal":
-                maxRoll = Metal;
+                maxRoll = MetalStat;
                 break;
         }
         return Random.Range(1, maxRoll + 1);
@@ -103,6 +105,8 @@ public class BattleCharacter : MonoBehaviour
         PlayerPrefs.SetInt("WoodStat", WoodStat);
         PlayerPrefs.SetInt("MetalStat", MetalStat);
         PlayerPrefs.Save();
+        
+        PentagonGraph?.UpdateGraph(this);
     }
     
     public void LoadStats()
@@ -114,16 +118,23 @@ public class BattleCharacter : MonoBehaviour
             EarthStat = PlayerPrefs.GetInt("EarthStat");
             WoodStat = PlayerPrefs.GetInt("WoodStat");
             MetalStat = PlayerPrefs.GetInt("MetalStat");
-            
+        
             PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
             if (pentagonGraph != null)
             {
                 pentagonGraph.UpdateGraph(this);
             }
         }
-        else if (!StatsInitialized)
+        else
         {
+            Debug.Log("PlayerPrefs keys not found, setting initial stats");
             SetInitialStats();
+        
+            PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
+            if (pentagonGraph != null)
+            {
+                pentagonGraph.UpdateGraph(this);
+            }
         }
     }
 }
