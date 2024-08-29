@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BattleDialogue : MonoBehaviour
+public class BattleDialogue : ScriptableObject
 {
     public BattleCharacter Enemy { get; set; }
     public int Compassion { get; set; }

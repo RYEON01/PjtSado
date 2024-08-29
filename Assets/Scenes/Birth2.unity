@@ -879,8 +879,8 @@ MonoBehaviour:
   m_text: "\uC548\uD0C0\uAE5D\uAD6C\uB098\n\uBBF8\uC0DD\uC73C\uB85C \uD0DC\uC5B4\uB098
     \uBBF8\uC0DD\uC73C\uB85C \uC8FD\uC744 \uC6B4\uBA85, \uC774\uB9E4\uC5EC\r"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
-  m_sharedMaterial: {fileID: -7558334978220188321, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a5ce88d33fff37346b8eca72e7951394, type: 2}
+  m_sharedMaterial: {fileID: 2305135438927552806, guid: a5ce88d33fff37346b8eca72e7951394, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1733,3 +1733,6 @@ MonoBehaviour:
   AttackButton: {fileID: 0}
   BraceButton: {fileID: 0}
   ElementButtons: []
+  PDamText: {fileID: 0}
+  EDefText: {fileID: 0}
+  UIManager: {fileID: 0}

@@ -4213,8 +4213,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: TS0RVNG_II
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d6b8c8d9e792f7c46a227b94a9b8259c, type: 2}
-  m_sharedMaterial: {fileID: 6727760373145756454, guid: d6b8c8d9e792f7c46a227b94a9b8259c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a5ce88d33fff37346b8eca72e7951394, type: 2}
+  m_sharedMaterial: {fileID: 2305135438927552806, guid: a5ce88d33fff37346b8eca72e7951394, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7171,8 +7171,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC548\uB155\uD558\uC138\uC694!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d6b8c8d9e792f7c46a227b94a9b8259c, type: 2}
-  m_sharedMaterial: {fileID: 6727760373145756454, guid: d6b8c8d9e792f7c46a227b94a9b8259c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
+  m_sharedMaterial: {fileID: -7558334978220188321, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

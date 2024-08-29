@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class BattlePlayingSystem : MonoBehaviour
@@ -9,12 +10,18 @@ public class BattlePlayingSystem : MonoBehaviour
     public static BattlePlayingSystem Instance { get; private set; }
     public BattleCharacter Player { get; set; }
     public BattleCharacter Enemy { get; set; }
-    public bool IsPlayerTurn { get; set; }
     public BattleDialogue BattleDialogue { get; set; }
+    public bool IsPlayerTurn { get; set; }
+    public bool BufferFlag { get; set; }
     public Inventory Inventory { get; set; }
     public Button AttackButton;
     public Button BraceButton;
+    public Button Brace_AssessButton;
+    public Button Brace_ItemButton;
+    public PentagonGraph PentagonGraph;
     public List<Button> ElementButtons;
+    public GameObject DialogueObj;
+    public GameObject PentagonGraphUI;
 
     public TextMeshProUGUI PDamText;
     public TextMeshProUGUI EDefText;
@@ -43,7 +50,7 @@ public class BattlePlayingSystem : MonoBehaviour
             return;
         }
         AttackButton.onClick.AddListener(PlayerAttack);
-        BraceButton.onClick.AddListener(PlayerAttack);
+        BraceButton.onClick.AddListener(PlayerBrace);
     }
 
     void OnDestroy()
@@ -58,8 +65,23 @@ public class BattlePlayingSystem : MonoBehaviour
         Enemy = enemy;
         Enemy.HP = 100;
         IsPlayerTurn = true;
-        BattleDialogue = new BattleDialogue(enemy);
-        Inventory = new Inventory();
+        BattleDialogue = ScriptableObject.CreateInstance<BattleDialogue>();
+        BattleDialogue.Enemy = enemy;
+        Inventory = ScriptableObject.CreateInstance<Inventory>();
+    
+        Inventory.AddItem(ScriptableObject.CreateInstance<Item_Healer>());
+        Inventory.AddItem(ScriptableObject.CreateInstance<Item_Buffer>());
+        Inventory.AddItem(ScriptableObject.CreateInstance<Item_Shielder>());
+    }
+    void Update()
+    {
+        if (UIManager.tutText.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
+        {
+            UIManager.tutText.gameObject.SetActive(false);
+            PentagonGraph.gameObject.SetActive(false);
+            PentagonGraphUI.gameObject.SetActive(false);
+            IsPlayerTurn = !IsPlayerTurn;
+        }
     }
     public void HandleTurn(string playerElement, string enemyElement)
     {
@@ -121,6 +143,11 @@ public class BattlePlayingSystem : MonoBehaviour
         int playerStat = GetPlayerStat(element);
         Debug.Log("Player stat for " + element + ": " + playerStat);
         int PDam = Player.RollDice(element);
+        if (BufferFlag)
+        {
+            PDam += 15;
+            BufferFlag = false;
+        }
         Debug.Log("PDam: " + PDam);
         StartCoroutine(UIManager.SetActiveWithFade(PDamText.gameObject, true, 1f));
         PDamText.text = PDam.ToString();
@@ -194,7 +221,62 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void PlayerBrace()
     {
-        // TODO: Implement the player's brace
+        StartCoroutine(UIManager.SetActiveWithFade(AttackButton.gameObject, false, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(BraceButton.gameObject, false, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(Brace_AssessButton.gameObject, true, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, true, 1f));
+        Brace_AssessButton.onClick.AddListener(HandleBraceAssess);
+        Brace_ItemButton.onClick.AddListener(HandleBraceItem);
+    }
+    
+    public void HandleBraceAssess()
+    {
+        StartCoroutine(UIManager.SetActiveWithFade(Brace_AssessButton.gameObject, false, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
+
+        PentagonGraphUI.gameObject.SetActive(true);
+        PentagonGraph.gameObject.SetActive(true);
+        PentagonGraph.UpdateGraph(Enemy);
+
+        UIManager.nameText.text = "TS0RVNG_II";
+        UIManager.dialogueText.text = "이매야! 저 녀석의 운명을 분석해왔어. 어서 봐봐!";
+        UIManager.tutText.gameObject.SetActive(true);
+        UIManager.tutText.text = "*분석을 끝내셨다면 <Space> 키를 누르세요.";
+    }
+
+    public void HandleBraceItem()
+    {
+        StartCoroutine(UIManager.SetActiveWithFade(Brace_AssessButton.gameObject, false, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
+
+        if (Inventory == null || Inventory.Items.Count == 0)
+        {
+            Debug.Log("Inventory is null or empty");
+        }
+        else if (UIManager != null)
+        {
+            UIManager.PrintInventory(Inventory);
+        }
+    }
+
+    public void UseItem(Item item)
+    {
+        if (item.Quantity <= 0)
+        {
+            Debug.Log("You don't have any more " + item.Name + " items left.");
+            return;
+        }
+        
+        Debug.Log("Using item: " + item.Name);
+        
+        StartCoroutine(UIManager.SetActiveWithFade(UIManager.ItemHealerButton.gameObject, false, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(UIManager.ItemBufferButton.gameObject, false, 1f));
+        StartCoroutine(UIManager.SetActiveWithFade(UIManager.ItemShielderButton.gameObject, false, 1f));
+        
+        item.Quantity--;
+        item.Use();
+
+        IsPlayerTurn = !IsPlayerTurn;
     }
 
     public void EnemyAttack()

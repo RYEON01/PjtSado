@@ -3962,7 +3962,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC548\uB155\uD558\uC138\uC694!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d6b8c8d9e792f7c46a227b94a9b8259c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d82d8ccff94368448759d647af935f4, type: 2}
   m_sharedMaterial: {fileID: -6276814947807861954, guid: a0a425856f5ad084fbab3624c39bae79, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6311,7 +6311,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: TS0RVNG_II
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d6b8c8d9e792f7c46a227b94a9b8259c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a5ce88d33fff37346b8eca72e7951394, type: 2}
   m_sharedMaterial: {fileID: 1056544277162577172, guid: 864937a1c9a957e44aa8094f9baf24c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
