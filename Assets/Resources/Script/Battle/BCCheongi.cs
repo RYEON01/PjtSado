@@ -6,7 +6,7 @@ public class BCCheongi : BattleCharacter
 {
     public BCCheongi()
     {
-        Name = "Juon";
+        Name = "Cheongi";
         Water = 65;
         Fire = 30;
         Earth = 20;

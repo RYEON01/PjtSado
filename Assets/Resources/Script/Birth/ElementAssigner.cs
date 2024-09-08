@@ -73,7 +73,7 @@ public class ElementAssigner : MonoBehaviour
         return element;
     }
     
-    public BattleCharacter Assign10and12(int selectedYear, int selectedMonth, int selectedDate, string selectedTime)
+    public BCPlayer Assign10and12(int selectedYear, int selectedMonth, int selectedDate, string selectedTime)
     {
         int year10 = (selectedYear % 10);
         int year12 = selectedYear % 12;
@@ -93,19 +93,19 @@ public class ElementAssigner : MonoBehaviour
         FiveElements timeA = AssignElement(time10, true);
         FiveElements timeB = AssignElement(time12, false);
         
-        BattleCharacter character = BattleCharacter.Instance;
+        BCPlayer character = BCPlayer.PlayerInstance;
         character.WoodElement = CountElement(FiveElements.Wood, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.FireElement = CountElement(FiveElements.Fire, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.EarthElement = CountElement(FiveElements.Earth, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.MetalElement = CountElement(FiveElements.Metal, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
         character.WaterElement = CountElement(FiveElements.Water, yearA, yearB, monthA, monthB, dateA, dateB, timeA, timeB);
-        
+
         character.WaterStat = (character.WaterElement * 10) + 10;
         character.FireStat = (character.FireElement * 10) + 10;
         character.EarthStat = (character.EarthElement * 10) + 10;
         character.WoodStat = (character.WoodElement * 10) + 10;
         character.MetalStat = (character.MetalElement * 10) + 10;
-        
+
         return character;
     }
     

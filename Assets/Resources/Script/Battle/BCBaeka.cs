@@ -6,7 +6,7 @@ public class BCBaeka : BattleCharacter
 {
     public BCBaeka()
     {
-        Name = "Cheongi";
+        Name = "Baeka";
         Water = 35;
         Fire = 25;
         Earth = 25;

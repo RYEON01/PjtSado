@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class BattlePlayingSystem : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class BattlePlayingSystem : MonoBehaviour
     public Button BraceButton;
     public Button Brace_AssessButton;
     public Button Brace_ItemButton;
-    public PentagonGraph PentagonGraph;
+    public PentagonGraph PlayerPentagonGraph;
+    public PentagonGraph EnemyPentagonGraph;
     public List<Button> ElementButtons;
     public GameObject DialogueObj;
     public GameObject PentagonGraphUI;
@@ -26,10 +28,18 @@ public class BattlePlayingSystem : MonoBehaviour
     public TextMeshProUGUI PDamText;
     public TextMeshProUGUI EDefText;
 
-    public BattleUIManager UIManager; // Add this line
+    public BattleUIManager UIManager;
 
+    /*
     void Awake()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name != "Battle_C")
+        {
+            Destroy(this);
+            return;
+        }
+        
         if (Instance == null)
         {
             Instance = this;
@@ -39,24 +49,58 @@ public class BattlePlayingSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
+        
         UIManager = GameObject.FindObjectOfType<BattleUIManager>();
         if (UIManager == null)
         {
-            Debug.LogError("BattleUIManager instance not found");
+            Debug.LogError("UIManager is null");
             return;
         }
+    }
+    */
+
+    private void Start()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name != "Battle_C")
+        {
+            Destroy(this);
+            return;
+        }
+        
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        
+        UIManager = GameObject.FindObjectOfType<BattleUIManager>();
+        if (UIManager == null)
+        {
+            Debug.LogError("UIManager is null");
+            return;
+        }
+    
         AttackButton.onClick.AddListener(PlayerAttack);
         BraceButton.onClick.AddListener(PlayerBrace);
+        PlayerPentagonGraph = GameObject.Find("PlayerPentagonGraph").GetComponent<PentagonGraph>();
     }
 
     void OnDestroy()
     {
-        AttackButton.onClick.RemoveAllListeners();
-        BraceButton.onClick.RemoveAllListeners();
+        if (AttackButton != null)
+        {
+            AttackButton.onClick.RemoveAllListeners();
+        }
+
+        if (BraceButton != null)
+        {
+            BraceButton.onClick.RemoveAllListeners();
+        }
     }
     public void Initialize(BattleCharacter player, BattleCharacter enemy)
     {
@@ -72,13 +116,20 @@ public class BattlePlayingSystem : MonoBehaviour
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Healer>());
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Buffer>());
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Shielder>());
+        
+        UIManager.PlayerPentagonGraph = PlayerPentagonGraph;
+        UIManager.EnemyPentagonGraph = EnemyPentagonGraph;
+        UIManager.PlayerHPSlider.maxValue = Player.HP;
+        UIManager.EnemyHPSlider.maxValue = Enemy.HP;
+        UIManager.PlayerHPSlider.value = Player.HP;
+        UIManager.EnemyHPSlider.value = Enemy.HP;
     }
     void Update()
     {
         if (UIManager.tutText.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
         {
             UIManager.tutText.gameObject.SetActive(false);
-            PentagonGraph.gameObject.SetActive(false);
+            UIManager.EnemyPentagonGraph.gameObject.SetActive(false);
             PentagonGraphUI.gameObject.SetActive(false);
             IsPlayerTurn = !IsPlayerTurn;
         }
@@ -107,7 +158,7 @@ public class BattlePlayingSystem : MonoBehaviour
         AttackButton.enabled = true;
         BraceButton.enabled = true;
         AttackButton.onClick.AddListener(PlayerAttack);
-        BraceButton.onClick.AddListener(PlayerAttack);
+        BraceButton.onClick.AddListener(PlayerBrace);
     }
 
     public void HandleEnemyTurn()
@@ -118,12 +169,22 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void PlayerAttack()
     {
+        if (BraceButton == null)
+        {
+            Debug.LogError("BraceButton is null");
+            return;
+        }
         StartCoroutine(UIManager.SetActiveWithFade(BraceButton.gameObject, false, 1f));
 
         List<string> elements = new List<string> { "wood", "fire", "metal", "water", "earth" };
         for (int i = 0; i < ElementButtons.Count; i++)
         {
             Button elementButton = ElementButtons[i];
+            if (elementButton == null)
+            {
+                Debug.LogError("ElementButton at index " + i + " is null");
+                continue;
+            }
             string element = elements[i];
 
             StartCoroutine(UIManager.SetActiveWithFade(elementButton.gameObject, true, 1f)); // Show the element button
@@ -134,6 +195,12 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleElementAttack(string element)
     {
+        if (Player == null)
+        {
+            Debug.LogError("Player is null in HandleElementAttack");
+            return;
+        }
+        
         StartCoroutine(UIManager.SetActiveWithFade(AttackButton.gameObject, false, 1f));
         foreach (Button elementButton in ElementButtons)
         {
@@ -178,7 +245,16 @@ public class BattlePlayingSystem : MonoBehaviour
             HandleBattleEnd();
         }
 
+        UIManager.UpdateUI();
         IsPlayerTurn = !IsPlayerTurn;
+        if (Player == null)
+        {
+            Debug.LogError("Player is null at the end of HandleElementAttack");
+        }
+        else
+        {
+            Debug.Log("Player is not null at the end of HandleElementAttack");
+        }
     }
 
     private int GetPlayerStat(string element)
@@ -235,8 +311,8 @@ public class BattlePlayingSystem : MonoBehaviour
         StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
 
         PentagonGraphUI.gameObject.SetActive(true);
-        PentagonGraph.gameObject.SetActive(true);
-        PentagonGraph.UpdateGraph(Enemy);
+        UIManager.EnemyPentagonGraph.gameObject.SetActive(true);
+        UIManager.EnemyPentagonGraph.UpdateGraph(Enemy);
 
         UIManager.nameText.text = "TS0RVNG_II";
         UIManager.dialogueText.text = "이매야! 저 녀석의 운명을 분석해왔어. 어서 봐봐!";

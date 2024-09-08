@@ -2,10 +2,52 @@ using UnityEngine;
 
 public class BattleCharacter : MonoBehaviour
 {
-    public static BattleCharacter Instance { get; set; }
+    private static BattleCharacter instance;
+
+    public static BattleCharacter Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<BattleCharacter>();
+                Debug.Log("BattleCharacter instance: " + instance);
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("BattleCharacter");
+                    instance = obj.AddComponent<BattleCharacter>();
+                    DontDestroyOnLoad(obj);
+                }
+            }
+            return instance;
+        }
+    }
+    
+    private static BattleCharacter enemyInstance;
+
+    public static BattleCharacter EnemyInstance
+    {
+        get
+        {
+            if (enemyInstance == null)
+            {
+                enemyInstance = FindObjectOfType<BattleCharacter>();
+                if (enemyInstance == null)
+                {
+                    GameObject obj = new GameObject("EnemyCharacter");
+                    enemyInstance = obj.AddComponent<BattleCharacter>();
+                    DontDestroyOnLoad(obj);
+                }
+            }
+            return enemyInstance;
+        }
+        set
+        {
+            enemyInstance = value;
+        }
+    }
+    public bool StatsInitialized { get; protected set; }
     public PentagonGraph PentagonGraph { get; set; }
-    public bool StatsInitialized { get; private set; }
-    private static bool hasInitialized = false;
     
     public virtual string GetDialogue()
     {
@@ -33,46 +75,7 @@ public class BattleCharacter : MonoBehaviour
     public int MetalStat { get; set; }
     
     public int Compassion { get; set; }
-    
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
 
-        if (!hasInitialized && WaterStat == 0 && FireStat == 0 && EarthStat == 0 && WoodStat == 0 && MetalStat == 0)
-        {
-            SetInitialStats();
-            StatsInitialized = true;
-            hasInitialized = true;
-        }
-    }
-
-    public void SetInitialStats()
-    {
-        WaterStat = 20;
-        FireStat = 30;
-        EarthStat = 40;
-        WoodStat = 20;
-        MetalStat = 20;
-        HP = 100;
-        
-        PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
-        if (pentagonGraph != null)
-        {
-            pentagonGraph.UpdateGraph(this);
-        }
-        
-        StatsInitialized = true;
-        SaveStats();
-    }
-    
     public int RollDice(string element)
     {
         int maxRoll = 0;
@@ -95,46 +98,5 @@ public class BattleCharacter : MonoBehaviour
                 break;
         }
         return Random.Range(1, maxRoll + 1);
-    }
-    
-    public void SaveStats()
-    {
-        PlayerPrefs.SetInt("WaterStat", WaterStat);
-        PlayerPrefs.SetInt("FireStat", FireStat);
-        PlayerPrefs.SetInt("EarthStat", EarthStat);
-        PlayerPrefs.SetInt("WoodStat", WoodStat);
-        PlayerPrefs.SetInt("MetalStat", MetalStat);
-        PlayerPrefs.Save();
-        
-        PentagonGraph?.UpdateGraph(this);
-    }
-    
-    public void LoadStats()
-    {
-        if (PlayerPrefs.HasKey("WaterStat"))
-        {
-            WaterStat = PlayerPrefs.GetInt("WaterStat");
-            FireStat = PlayerPrefs.GetInt("FireStat");
-            EarthStat = PlayerPrefs.GetInt("EarthStat");
-            WoodStat = PlayerPrefs.GetInt("WoodStat");
-            MetalStat = PlayerPrefs.GetInt("MetalStat");
-        
-            PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
-            if (pentagonGraph != null)
-            {
-                pentagonGraph.UpdateGraph(this);
-            }
-        }
-        else
-        {
-            Debug.Log("PlayerPrefs keys not found, setting initial stats");
-            SetInitialStats();
-        
-            PentagonGraph pentagonGraph = FindObjectOfType<PentagonGraph>();
-            if (pentagonGraph != null)
-            {
-                pentagonGraph.UpdateGraph(this);
-            }
-        }
     }
 }

@@ -16,7 +16,6 @@ public class PentagonGraph : MonoBehaviour
 
     public void UpdateGraph(BattleCharacter character)
     {
-        // Calculate the positions of the element dots
         Vector2 woodDotPosition = Vector2.Lerp(MiddlePoint.position, WoodPoint.position, character.WoodStat / 100f);
         Vector2 fireDotPosition = Vector2.Lerp(MiddlePoint.position, FirePoint.position, character.FireStat / 100f);
         Vector2 metalDotPosition = Vector2.Lerp(MiddlePoint.position, MetalPoint.position, character.MetalStat / 100f);
@@ -39,14 +38,17 @@ public class PentagonGraph : MonoBehaviour
         PentagonLine.positionCount = 6;
         PentagonLine.SetPositions(new Vector3[] { woodDotPosition, fireDotPosition, metalDotPosition, waterDotPosition, earthDotPosition, woodDotPosition });
 
-        PentagonLine.material = new Material(Shader.Find("Sprites/Default")); // Set the material of the line
-        PentagonLine.startColor = Color.white; // Set the start color of the line
-        PentagonLine.endColor = Color.white; // Set the end color of the line
+        PentagonLine.material = new Material(Shader.Find("Sprites/Default"));
+        PentagonLine.startColor = Color.white;
+        PentagonLine.endColor = Color.white;
         
-        //Debug.Log("WoodStat: " + character.WoodStat);
-        //Debug.Log("FireStat: " + character.FireStat);
-        //Debug.Log("MetalStat: " + character.MetalStat);
-        //Debug.Log("WaterStat: " + character.WaterStat);
-        //Debug.Log("EarthStat: " + character.EarthStat);
+        /*
+        Debug.Log("WoodStat: " + character.WoodStat);
+        Debug.Log("FireStat: " + character.FireStat);
+        Debug.Log("MetalStat: " + character.MetalStat);
+        Debug.Log("WaterStat: " + character.WaterStat);
+        Debug.Log("EarthStat: " + character.EarthStat);
+        */
+        
     }
 }

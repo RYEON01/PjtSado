@@ -21,9 +21,18 @@ public class BirthBasics : MonoBehaviour
     private int selectedDate;
     private string selectedTime;
     
+    private int lunarYear;
+    private int lunarMonth;
+    private int lunarDay;
+    
     void Start()
     {
         elementAssigner = GetComponent<ElementAssigner>();
+        if (elementAssigner == null)
+        {
+            Debug.LogError("ElementAssigner is null");
+            return;
+        }
         PopulateDropdowns();
         calendarToggle.onValueChanged.AddListener(delegate {ToggleValueChanged(calendarToggle);});
         confirmButton.onClick.AddListener(ConfirmSelections);
@@ -78,17 +87,34 @@ public class BirthBasics : MonoBehaviour
         selectedDate = int.Parse(dateDropdown.options[dateDropdown.value].text);
         selectedTime = timeDropdown.options[timeDropdown.value].text;
         
-        if (!calendarToggle.isOn) // If the solar calendar is selected
+        if (!calendarToggle.isOn)
         {
             ConvertSolarToLunar(selectedYear, selectedMonth, selectedDate);
+            // Use the lunar dates to assign the stats
+            elementAssigner.Assign10and12(lunarYear, lunarMonth, lunarDay, selectedTime);
+        }
+        else
+        {
+            // Use the selected dates to assign the stats
+            elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
         }
         
-        elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
+        BattleCharacter assignedCharacter = elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
         
-        BattleCharacter.Instance = elementAssigner.Assign10and12(selectedYear, selectedMonth, selectedDate, selectedTime);
-        GameManager.Instance.BattleSystem.Player = BattleCharacter.Instance;
-        GameManager.Instance.BattleSystem.Enemy = BattleCharacter.Instance;
-        BattleCharacter.Instance.SaveStats();
+        BCPlayer playerInstance = assignedCharacter as BCPlayer;
+        if (playerInstance != null)
+        {
+            GameManager.Instance.BattleSystem.Player = playerInstance;
+            playerInstance.SaveStats();
+        }
+        else
+        {
+            Debug.LogError("Assigned character is not a BCPlayer");
+        }
+
+        GameObject enemyObject = new GameObject("Enemy");
+        BCCheongi enemyInstance = enemyObject.AddComponent<BCCheongi>();
+        GameManager.Instance.BattleSystem.Enemy = enemyInstance;
     }
 
     void PopulateYearDropdown()
@@ -132,7 +158,7 @@ public class BirthBasics : MonoBehaviour
         List<string> options = new List<string>();
 
         // The lunar calendar year range might be different from the solar calendar
-        for (int year = 1901; year <= System.DateTime.Now.Year + 3; year++)
+        for (int year = 1910; year <= System.DateTime.Now.Year + 3; year++)
         {
             options.Add(year.ToString());
         }
@@ -204,9 +230,9 @@ public class BirthBasics : MonoBehaviour
         ChineseLunisolarCalendar calendar = new ChineseLunisolarCalendar();
         try
         {
-            int lunarYear = calendar.GetYear(new DateTime(year, month, day));
-            int lunarMonth = calendar.GetMonth(new DateTime(year, month, day));
-            int lunarDay = calendar.GetDayOfMonth(new DateTime(year, month, day));
+            lunarYear = calendar.GetYear(new DateTime(year, month, day));
+            lunarMonth = calendar.GetMonth(new DateTime(year, month, day));
+            lunarDay = calendar.GetDayOfMonth(new DateTime(year, month, day));
         }
         catch (ArgumentOutOfRangeException e)
         {

@@ -5,9 +5,12 @@ using TMPro;
 
 public class BattleUIManager : MonoBehaviour
 {
+    public static BattleUIManager Instance { get; private set; }
     public BattleCharacter Player { get; set; }
     public BattleCharacter Enemy { get; set; }
-    public PentagonGraph PentagonGraph { get; set; }
+    
+    public PentagonGraph PlayerPentagonGraph { get; set; }
+    public PentagonGraph EnemyPentagonGraph { get; set; }
 
     public TMP_Text dialogueText;
     public TMP_Text nameText;
@@ -15,20 +18,103 @@ public class BattleUIManager : MonoBehaviour
 
     private GameObject dialogueUI;
     
+    public UnityEngine.UI.Slider PlayerHPSlider;
+    public UnityEngine.UI.Slider EnemyHPSlider;
+    public TMP_Text PlayerHPText;
+    public TMP_Text EnemyHPText;
+    
     public Button ItemHealerButton;
     public Button ItemBufferButton;
     public Button ItemShielderButton;
 
+    public void IniSettings()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("GameManager.Instance is null");
+        }
+        else
+        {
+            Player = GameManager.Instance.Player;
+            Enemy = GameManager.Instance.Enemy;
+        }
+        if (Player == null)
+        {
+            Debug.LogError("Player is null");
+        }
+
+        if (Enemy == null)
+        {
+            Debug.LogError("Enemy is null");
+        }
+    }
     public BattleUIManager(BattleCharacter player, BattleCharacter enemy)
     {
         Player = player;
         Enemy = enemy;
     }
 
-    // Placeholder for the method that will update the UI
     public void UpdateUI()
     {
-        PentagonGraph.UpdateGraph(Player);
+        Debug.Log("Player object before UpdateUI: " + Player);
+        Debug.Log("Enemy object before UpdateUI: " + Enemy);
+        
+        if (Player == null)
+        {
+            Debug.LogError("Player is null at the beginning of UpdateUI");
+        }
+        else
+        {
+            Debug.Log("Player is not null at the beginning of UpdateUI");
+        }
+
+        if (Enemy == null)
+        {
+            Debug.LogError("Enemy is null");
+            return;
+        }
+        
+        if (PlayerHPSlider == null)
+        {
+            Debug.LogError("PlayerHPSlider is null");
+            return;
+        }
+        PlayerHPSlider.value = Player.HP;
+
+        if (EnemyHPSlider == null)
+        {
+            Debug.LogError("EnemyHPSlider is null");
+            return;
+        }
+        EnemyHPSlider.value = Enemy.HP;
+
+        if (PlayerHPText == null)
+        {
+            Debug.LogError("PlayerHPText is null");
+            return;
+        }
+        PlayerHPText.text = $"{Player.HP}/100";
+
+        if (EnemyHPText == null)
+        {
+            Debug.LogError("EnemyHPText is null");
+            return;
+        }
+        EnemyHPText.text = $"{Enemy.HP}/100";
+        
+        Debug.Log("Player object after UpdateUI: " + Player);
+        Debug.Log("Enemy object after UpdateUI: " + Enemy);
     }
 
     public void ShowDialogue(string dialogue)
