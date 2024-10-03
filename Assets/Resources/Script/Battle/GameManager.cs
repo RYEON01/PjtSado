@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("GameManager Awake method called");
         if (Instance == null)
         {
             Instance = this;
@@ -39,8 +38,6 @@ public class GameManager : MonoBehaviour
         }
 
         BattleSystem = GetComponent<BattlePlayingSystem>();
-        UIManager = GetComponent<BattleUIManager>();
-        UIManager.IniSettings();
         
         if (BattleSystem == null)
         {
@@ -67,15 +64,18 @@ public class GameManager : MonoBehaviour
                 break;
         }
         
+        UIManager = GetComponent<BattleUIManager>();
+        if (UIManager != null)
+        {
+            UIManager.IniSettings();
+        }
+        
         if (Player != null && Enemy != null)
         {
             BattleSystem.Initialize(Player, Enemy);
         }
-        Debug.Log("Enemy object: " + Enemy);
         SceneManager.sceneLoaded += OnSceneLoaded;
         
-        Debug.Log("Player object after Awake: " + Player);
-        Debug.Log("Enemy object after Awake: " + Enemy);
     }
     
     IEnumerator Start()
@@ -92,8 +92,6 @@ public class GameManager : MonoBehaviour
         yield return null;
 
         BattleUIManager.Instance.UpdateUI();
-        Debug.Log("Player object after Start: " + Player);
-        Debug.Log("Enemy object after Start: " + Enemy);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -123,8 +121,6 @@ public class GameManager : MonoBehaviour
             */
         }
         BattleUIManager.Instance.UpdateUI();
-        Debug.Log("Player object after OnSceneLoaded: " + Player);
-        Debug.Log("Enemy object after OnSceneLoaded: " + Enemy);
     }
 
     void LoadPlayerStats()
@@ -167,8 +163,7 @@ public class GameManager : MonoBehaviour
         GameObject enemyObject = new GameObject("Enemy");
         T enemyInstance = enemyObject.AddComponent<T>();
         GameManager.Instance.BattleSystem.Enemy = enemyInstance;
+        GameManager.Instance.Enemy = enemyInstance;
         BattleCharacter.EnemyInstance = enemyInstance;
-        
-        Debug.Log("StartBattle method called. Enemy object: " + Enemy);
     }
 }

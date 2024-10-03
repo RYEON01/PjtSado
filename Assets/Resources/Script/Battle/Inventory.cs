@@ -69,12 +69,12 @@ public class Item_Shielder : Item
     private void Awake()
     {
         Name = "방어";
-        Description = "당신이 받는 피해를 잠깐 동안 줄여준다.";
+        Description = "당신이 받는 피해를 일부 반사시킨다.";
         Quantity = 5;
     }
 
     public override void Use()
     {
-        //TODO: Implement this method;
+        BattlePlayingSystem.Instance.ShielderFlag = true;
     }
 }

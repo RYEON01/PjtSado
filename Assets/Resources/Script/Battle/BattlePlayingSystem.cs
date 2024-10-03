@@ -12,8 +12,8 @@ public class BattlePlayingSystem : MonoBehaviour
     public BattleCharacter Player { get; set; }
     public BattleCharacter Enemy { get; set; }
     public BattleDialogue BattleDialogue { get; set; }
-    public bool IsPlayerTurn { get; set; }
     public bool BufferFlag { get; set; }
+    public bool ShielderFlag { get; set; }
     public Inventory Inventory { get; set; }
     public Button AttackButton;
     public Button BraceButton;
@@ -22,42 +22,36 @@ public class BattlePlayingSystem : MonoBehaviour
     public PentagonGraph PlayerPentagonGraph;
     public PentagonGraph EnemyPentagonGraph;
     public List<Button> ElementButtons;
+    public List<Button> ElementDefButtons;
     public GameObject DialogueObj;
     public GameObject PentagonGraphUI;
+    public GameObject TurnTutText;
 
     public TextMeshProUGUI PDamText;
     public TextMeshProUGUI EDefText;
 
     public BattleUIManager UIManager;
 
-    /*
-    void Awake()
+    private bool isPlayerTurn;
+    private bool previousTurn;
+    public bool IsPlayerTurn
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name != "Battle_C")
+        get { return isPlayerTurn; }
+        set
         {
-            Destroy(this);
-            return;
-        }
-        
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        
-        UIManager = GameObject.FindObjectOfType<BattleUIManager>();
-        if (UIManager == null)
-        {
-            Debug.LogError("UIManager is null");
-            return;
+            isPlayerTurn = value;
+            Debug.Log("IsPlayerTurn set to: " + value);
+            if (isPlayerTurn)
+            {
+                HandlePlayerTurn();
+            }
+            else
+            {
+                Debug.Log("HandleEnemyTurn called");
+                HandleEnemyTurn();
+            }
         }
     }
-    */
 
     private void Start()
     {
@@ -77,17 +71,9 @@ public class BattlePlayingSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        UIManager = GameObject.FindObjectOfType<BattleUIManager>();
-        if (UIManager == null)
-        {
-            Debug.LogError("UIManager is null");
-            return;
-        }
     
         AttackButton.onClick.AddListener(PlayerAttack);
         BraceButton.onClick.AddListener(PlayerBrace);
-        PlayerPentagonGraph = GameObject.Find("PlayerPentagonGraph").GetComponent<PentagonGraph>();
     }
 
     void OnDestroy()
@@ -117,44 +103,33 @@ public class BattlePlayingSystem : MonoBehaviour
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Buffer>());
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Shielder>());
         
-        UIManager.PlayerPentagonGraph = PlayerPentagonGraph;
-        UIManager.EnemyPentagonGraph = EnemyPentagonGraph;
-        UIManager.PlayerHPSlider.maxValue = Player.HP;
-        UIManager.EnemyHPSlider.maxValue = Enemy.HP;
-        UIManager.PlayerHPSlider.value = Player.HP;
-        UIManager.EnemyHPSlider.value = Enemy.HP;
+        BattleUIManager.Instance.PlayerPentagonGraph = PlayerPentagonGraph;
+        BattleUIManager.Instance.EnemyPentagonGraph = EnemyPentagonGraph;
+        BattleUIManager.Instance.PlayerHPSlider.maxValue = Player.HP;
+        BattleUIManager.Instance.EnemyHPSlider.maxValue = Enemy.HP;
+        BattleUIManager.Instance.PlayerHPSlider.value = Player.HP;
+        BattleUIManager.Instance.EnemyHPSlider.value = Enemy.HP;
     }
     void Update()
     {
-        if (UIManager.tutText.gameObject.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
+        if (TurnTutText.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
         {
-            UIManager.tutText.gameObject.SetActive(false);
-            UIManager.EnemyPentagonGraph.gameObject.SetActive(false);
-            PentagonGraphUI.gameObject.SetActive(false);
+            TurnTutText.SetActive(false);
             IsPlayerTurn = !IsPlayerTurn;
         }
-    }
-    public void HandleTurn(string playerElement, string enemyElement)
-    {
-        BattleCharacter attacker = IsPlayerTurn ? Player : Enemy;
-        BattleCharacter defender = IsPlayerTurn ? Enemy : Player;
-
-        int attackRoll = attacker.RollDice(playerElement);
-        int defendRoll = defender.RollDice(enemyElement);
-
-        if (attackRoll > defendRoll)
-        {
-            defender.HP -= (attackRoll - defendRoll);
-        }
-
-        IsPlayerTurn = !IsPlayerTurn;
     }
 
     public void HandlePlayerTurn()
     {
-        BattleDialogue.StartDialogue();
-        StartCoroutine(UIManager.SetActiveWithFade(AttackButton.gameObject, true, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(BraceButton.gameObject, true, 1f));
+        Debug.Log("HandlePlayerTurn called");
+        
+        BattleUIManager.Instance.nameText.text = "TS0RVNG_II";
+        BattleUIManager.Instance.dialogueText.text = "이매야, 이제 어쩌지?";
+        
+        DeactivateUI();
+        
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(AttackButton.gameObject, true, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BraceButton.gameObject, true, 1f));
         AttackButton.enabled = true;
         BraceButton.enabled = true;
         AttackButton.onClick.AddListener(PlayerAttack);
@@ -163,8 +138,36 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleEnemyTurn()
     {
-        BattleDialogue.StartDialogue();
-        EnemyAttack();
+        Debug.Log("HandleEnemyTurn called");
+        
+        BattleUIManager.Instance.nameText.text = Enemy.Name;
+        BattleUIManager.Instance.dialogueText.text = "호락호락하게 당할 것 같으냐!";
+        
+        DeactivateUI();
+        
+        foreach (Button elementDefButton in ElementDefButtons)
+        {
+            StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementDefButton.gameObject, true, 1f));
+            elementDefButton.onClick.RemoveAllListeners();
+            elementDefButton.onClick.AddListener(() => HandleElementDefense(elementDefButton.name.ToLower()));
+        }
+    }
+    private void DeactivateUI()
+    {
+        Debug.Log("DeactivateUI called");
+        
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, false, 0f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, false, 0f));
+        
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BraceButton.gameObject, false, 0f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(AttackButton.gameObject, false, 0f));
+        
+        PentagonGraphUI.gameObject.SetActive(false);
+        
+        foreach (Button elementButton in ElementButtons)
+        {
+            StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementButton.gameObject, false, 0f));
+        }
     }
 
     public void PlayerAttack()
@@ -174,7 +177,7 @@ public class BattlePlayingSystem : MonoBehaviour
             Debug.LogError("BraceButton is null");
             return;
         }
-        StartCoroutine(UIManager.SetActiveWithFade(BraceButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BraceButton.gameObject, false, 1f));
 
         List<string> elements = new List<string> { "wood", "fire", "metal", "water", "earth" };
         for (int i = 0; i < ElementButtons.Count; i++)
@@ -187,7 +190,7 @@ public class BattlePlayingSystem : MonoBehaviour
             }
             string element = elements[i];
 
-            StartCoroutine(UIManager.SetActiveWithFade(elementButton.gameObject, true, 1f)); // Show the element button
+            StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementButton.gameObject, true, 1f));
             elementButton.onClick.RemoveAllListeners();
             elementButton.onClick.AddListener(() => HandleElementAttack(element));
         }
@@ -195,16 +198,17 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleElementAttack(string element)
     {
+        Debug.Log("Start of player's turn");
         if (Player == null)
         {
             Debug.LogError("Player is null in HandleElementAttack");
             return;
         }
         
-        StartCoroutine(UIManager.SetActiveWithFade(AttackButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(AttackButton.gameObject, false, 1f));
         foreach (Button elementButton in ElementButtons)
         {
-            StartCoroutine(UIManager.SetActiveWithFade(elementButton.gameObject, false, 1f));
+            StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementButton.gameObject, false, 1f));
         }
 
         int playerStat = GetPlayerStat(element);
@@ -216,15 +220,17 @@ public class BattlePlayingSystem : MonoBehaviour
             BufferFlag = false;
         }
         Debug.Log("PDam: " + PDam);
-        StartCoroutine(UIManager.SetActiveWithFade(PDamText.gameObject, true, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
         PDamText.text = PDam.ToString();
 
         int enemyStat = GetEnemyStat(element);
         Debug.Log("Enemy stat for " + element + ": " + enemyStat);
         int EDef = Enemy.RollDice(element);
         Debug.Log("EDef: " + EDef);
-        StartCoroutine(UIManager.SetActiveWithFade(EDefText.gameObject, true, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, true, 1f));
         EDefText.text = EDef.ToString();
+        PDamText.color = PDam == 1 ? Color.red : Color.white;
+        EDefText.color = EDef == 1 ? Color.red : Color.white;
 
         if (PDam > EDef)
         {
@@ -239,22 +245,79 @@ public class BattlePlayingSystem : MonoBehaviour
             EDefText.color = Color.red;
             Enemy.HP -= (int)(1.2 * (PDam - EDef));
         }
+        if (Player.HP <= 0)
+        {
+            GameOver();
+        }
+        if (Enemy.HP <= 0)
+        {
+            HandleBattleEnd();
+        }
+
+        BattleUIManager.Instance.UpdateUI();
+        TurnTutText.SetActive(true); // Add this line
+    }
+    
+    public void HandleElementDefense(string element)
+    {
+        Debug.Log("Start of enemy's turn");
+        foreach (Button elementDefButton in ElementDefButtons)
+        {
+            StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementDefButton.gameObject, false, 1f));
+        }
+
+        string[] elements = new string[] { "wood", "fire", "metal", "water", "earth" };
+        string enemyElement = elements[UnityEngine.Random.Range(0, elements.Length)];
+
+        int enemyStat = GetEnemyStat(enemyElement);
+        Debug.Log("Enemy stat for " + enemyElement + ": " + enemyStat);
+        int EDam = Enemy.RollDice(enemyElement);
+        
+        int playerStat = GetPlayerStat(element);
+        Debug.Log("Player stat for " + element + ": " + playerStat);
+        int PDef = Player.RollDice(element);
+
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, true, 1f));
+        EDefText.text = EDam.ToString();
+        PDamText.text = PDef.ToString();
+        EDefText.color = EDam == 1 ? Color.red : Color.white;
+        PDamText.color = PDef == 1 ? Color.red : Color.white;
+        
+        if (ShielderFlag && PDef < EDam)
+        {
+            EDam -= 5;
+            Enemy.HP -= 5;
+            EDefText.text = EDam.ToString();
+            ShielderFlag = false;
+        }
+        
+        if (EDam > PDef)
+        {
+            Player.HP -= (EDam - PDef);
+        }
+        else if (EDam == 1)
+        {
+            EDefText.color = Color.red;
+        }
+        else if (PDef == 1)
+        {
+            PDamText.color = Color.red;
+            Player.HP -= (int)(1.2 * (EDam - PDef));
+        }
+
+        if (Player.HP <= 0)
+        {
+            GameOver();
+        }
 
         if (Enemy.HP <= 0)
         {
             HandleBattleEnd();
         }
 
-        UIManager.UpdateUI();
-        IsPlayerTurn = !IsPlayerTurn;
-        if (Player == null)
-        {
-            Debug.LogError("Player is null at the end of HandleElementAttack");
-        }
-        else
-        {
-            Debug.Log("Player is not null at the end of HandleElementAttack");
-        }
+        BattleUIManager.Instance.UpdateUI();
+        TurnTutText.SetActive(true); // Add this line
     }
 
     private int GetPlayerStat(string element)
@@ -281,15 +344,15 @@ public class BattlePlayingSystem : MonoBehaviour
         switch (element.ToLower())
         {
             case "water":
-                return Enemy.FireStat;
-            case "fire":
-                return Enemy.MetalStat;
-            case "earth":
                 return Enemy.WaterStat;
-            case "wood":
+            case "fire":
+                return Enemy.FireStat;
+            case "earth":
                 return Enemy.EarthStat;
-            case "metal":
+            case "wood":
                 return Enemy.WoodStat;
+            case "metal":
+                return Enemy.MetalStat;
             default:
                 return 0;
         }
@@ -297,41 +360,40 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void PlayerBrace()
     {
-        StartCoroutine(UIManager.SetActiveWithFade(AttackButton.gameObject, false, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(BraceButton.gameObject, false, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(Brace_AssessButton.gameObject, true, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, true, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(AttackButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BraceButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(Brace_AssessButton.gameObject, true, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(Brace_ItemButton.gameObject, true, 1f));
         Brace_AssessButton.onClick.AddListener(HandleBraceAssess);
         Brace_ItemButton.onClick.AddListener(HandleBraceItem);
     }
     
     public void HandleBraceAssess()
     {
-        StartCoroutine(UIManager.SetActiveWithFade(Brace_AssessButton.gameObject, false, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(Brace_AssessButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
 
         PentagonGraphUI.gameObject.SetActive(true);
-        UIManager.EnemyPentagonGraph.gameObject.SetActive(true);
-        UIManager.EnemyPentagonGraph.UpdateGraph(Enemy);
+        BattleUIManager.Instance.EnemyPentagonGraph.gameObject.SetActive(true);
+        BattleUIManager.Instance.EnemyPentagonGraph.UpdateGraph(Enemy);
 
-        UIManager.nameText.text = "TS0RVNG_II";
-        UIManager.dialogueText.text = "이매야! 저 녀석의 운명을 분석해왔어. 어서 봐봐!";
-        UIManager.tutText.gameObject.SetActive(true);
-        UIManager.tutText.text = "*분석을 끝내셨다면 <Space> 키를 누르세요.";
+        BattleUIManager.Instance.nameText.text = "TS0RVNG_II";
+        BattleUIManager.Instance.dialogueText.text = "이매야! 저 녀석의 운명을 분석해왔어. 어서 봐봐!";
+        TurnTutText.SetActive(true);
     }
 
     public void HandleBraceItem()
     {
-        StartCoroutine(UIManager.SetActiveWithFade(Brace_AssessButton.gameObject, false, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(Brace_AssessButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(Brace_ItemButton.gameObject, false, 1f));
 
         if (Inventory == null || Inventory.Items.Count == 0)
         {
             Debug.Log("Inventory is null or empty");
         }
-        else if (UIManager != null)
+        else if (BattleUIManager.Instance != null)
         {
-            UIManager.PrintInventory(Inventory);
+            BattleUIManager.Instance.PrintInventory(Inventory);
         }
     }
 
@@ -345,14 +407,35 @@ public class BattlePlayingSystem : MonoBehaviour
         
         Debug.Log("Using item: " + item.Name);
         
-        StartCoroutine(UIManager.SetActiveWithFade(UIManager.ItemHealerButton.gameObject, false, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(UIManager.ItemBufferButton.gameObject, false, 1f));
-        StartCoroutine(UIManager.SetActiveWithFade(UIManager.ItemShielderButton.gameObject, false, 1f));
-        
         item.Quantity--;
         item.Use();
 
-        IsPlayerTurn = !IsPlayerTurn;
+        Button itemButton = null;
+        if (item is Item_Healer)
+        {
+            itemButton = BattleUIManager.Instance.ItemHealerButton;
+        }
+        else if (item is Item_Buffer)
+        {
+            itemButton = BattleUIManager.Instance.ItemBufferButton;
+        }
+        else if (item is Item_Shielder)
+        {
+            itemButton = BattleUIManager.Instance.ItemShielderButton;
+        }
+
+        if (itemButton != null)
+        {
+            itemButton.interactable = item.Quantity > 0;
+        }
+
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleUIManager.Instance.ItemHealerButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleUIManager.Instance.ItemBufferButton.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleUIManager.Instance.ItemShielderButton.gameObject, false, 1f));
+
+        BattleUIManager.Instance.nameText.text = "TS0RVNG_II";
+        BattleUIManager.Instance.dialogueText.text = "좋았어, 도움이 될 거야!";
+        TurnTutText.SetActive(true);
     }
 
     public void EnemyAttack()
@@ -363,5 +446,10 @@ public class BattlePlayingSystem : MonoBehaviour
     public void HandleBattleEnd()
     {
         // TODO: Implement the ending phase of the battle
+    }
+    
+    public void GameOver()
+    {
+        // TODO: Implement GameOver
     }
 }

@@ -49,15 +49,6 @@ public class BattleUIManager : MonoBehaviour
             Player = GameManager.Instance.Player;
             Enemy = GameManager.Instance.Enemy;
         }
-        if (Player == null)
-        {
-            Debug.LogError("Player is null");
-        }
-
-        if (Enemy == null)
-        {
-            Debug.LogError("Enemy is null");
-        }
     }
     public BattleUIManager(BattleCharacter player, BattleCharacter enemy)
     {
@@ -67,50 +58,9 @@ public class BattleUIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        Debug.Log("Player object before UpdateUI: " + Player);
-        Debug.Log("Enemy object before UpdateUI: " + Enemy);
-        
-        if (Player == null)
-        {
-            Debug.LogError("Player is null at the beginning of UpdateUI");
-        }
-        else
-        {
-            Debug.Log("Player is not null at the beginning of UpdateUI");
-        }
-
-        if (Enemy == null)
-        {
-            Debug.LogError("Enemy is null");
-            return;
-        }
-        
-        if (PlayerHPSlider == null)
-        {
-            Debug.LogError("PlayerHPSlider is null");
-            return;
-        }
         PlayerHPSlider.value = Player.HP;
-
-        if (EnemyHPSlider == null)
-        {
-            Debug.LogError("EnemyHPSlider is null");
-            return;
-        }
         EnemyHPSlider.value = Enemy.HP;
-
-        if (PlayerHPText == null)
-        {
-            Debug.LogError("PlayerHPText is null");
-            return;
-        }
         PlayerHPText.text = $"{Player.HP}/100";
-
-        if (EnemyHPText == null)
-        {
-            Debug.LogError("EnemyHPText is null");
-            return;
-        }
         EnemyHPText.text = $"{Enemy.HP}/100";
         
         Debug.Log("Player object after UpdateUI: " + Player);
@@ -134,8 +84,7 @@ public class BattleUIManager : MonoBehaviour
         {
             canvasGroup = obj.AddComponent<CanvasGroup>();
         }
-
-        // Fade in before activating the object
+        
         if (active)
         {
             obj.SetActive(true);
@@ -144,8 +93,9 @@ public class BattleUIManager : MonoBehaviour
                 canvasGroup.alpha = Mathf.Lerp(0, 1, t / fadeTime);
                 yield return null;
             }
+            canvasGroup.alpha = 1;
         }
-        // Fade out before deactivating the object
+        
         else
         {
             for (float t = 0.02f; t < fadeTime; t += Time.deltaTime * 3)
@@ -177,7 +127,7 @@ public class BattleUIManager : MonoBehaviour
             return;
         }
 
-        nameText.text = "TS0RVNG";
+        nameText.text = "TS0RVNG_II";
 
         string message = "이매야! 지금 ";
 
@@ -211,6 +161,14 @@ public class BattleUIManager : MonoBehaviour
                 itemButton.interactable = item.Quantity > 0;
                 itemButton.onClick.RemoveAllListeners();
                 itemButton.onClick.AddListener(() => BattlePlayingSystem.Instance.UseItem(item));
+                
+                CanvasGroup canvasGroup = itemButton.GetComponent<CanvasGroup>();
+                if (canvasGroup == null)
+                {
+                    canvasGroup = itemButton.gameObject.AddComponent<CanvasGroup>();
+                }
+                canvasGroup.alpha = item.Quantity > 0 ? 1f : 0.2f;
+                canvasGroup.interactable = item.Quantity > 0;
             }
         }
     }
