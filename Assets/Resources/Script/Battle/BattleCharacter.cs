@@ -75,6 +75,11 @@ public class BattleCharacter : MonoBehaviour
     public int MetalStat { get; set; }
     
     public int Compassion { get; set; }
+    
+    public virtual void InitializeStats()
+    {
+        // This method should be overridden in each subclass
+    }
 
     public int RollDice(string element)
     {

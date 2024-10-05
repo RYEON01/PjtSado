@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BCMuksa : BattleCharacter
 {
-    public BCMuksa()
+    public override void InitializeStats()
     {
         Name = "묵사";
-        Water = 110;
-        Fire = 25;
-        Earth = 20;
-        Wood = 25;
-        Metal = 30;
+        WaterStat = 110;
+        FireStat = 25;
+        EarthStat = 20;
+        WoodStat = 25;
+        MetalStat = 30;
         Compassion = 0;
     }
     

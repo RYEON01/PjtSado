@@ -27,7 +27,7 @@ public class BCPlayer : BattleCharacter
 
     void Awake()
     {
-        Debug.Log("BCPlayer Awake method called.");
+        //Debug.Log("BCPlayer Awake method called.");
         if (playerInstance != null && playerInstance != this)
         {
             Destroy(this.gameObject);
@@ -39,7 +39,7 @@ public class BCPlayer : BattleCharacter
             playerInstance = this;
         }
 
-        Debug.Log("playerInstance object: " + playerInstance);
+        //Debug.Log("playerInstance object: " + playerInstance);
         DontDestroyOnLoad(this.gameObject);
         
         if (!hasInitialized && WaterStat == 0 && FireStat == 0 && EarthStat == 0 && WoodStat == 0 && MetalStat == 0)
@@ -54,6 +54,7 @@ public class BCPlayer : BattleCharacter
 
     public void SetInitialStats()
     {
+        //Debug.Log("SetInitialStats called");
         WaterStat = 20;
         FireStat = 30;
         EarthStat = 40;
@@ -73,6 +74,7 @@ public class BCPlayer : BattleCharacter
 
     public void SaveStats()
     {
+        //Debug.Log("SaveStats called");
         PlayerPrefs.SetInt("WaterStat", WaterStat);
         PlayerPrefs.SetInt("FireStat", FireStat);
         PlayerPrefs.SetInt("EarthStat", EarthStat);
@@ -85,6 +87,7 @@ public class BCPlayer : BattleCharacter
 
     public void LoadStats()
     {
+        //Debug.Log("LoadStats called");
         if (PlayerPrefs.HasKey("WaterStat"))
         {
             WaterStat = PlayerPrefs.GetInt("WaterStat");

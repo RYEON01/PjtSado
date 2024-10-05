@@ -47,7 +47,6 @@ public class BattlePlayingSystem : MonoBehaviour
             }
             else
             {
-                Debug.Log("HandleEnemyTurn called");
                 HandleEnemyTurn();
             }
         }
@@ -98,6 +97,15 @@ public class BattlePlayingSystem : MonoBehaviour
         BattleDialogue = ScriptableObject.CreateInstance<BattleDialogue>();
         BattleDialogue.Enemy = enemy;
         Inventory = ScriptableObject.CreateInstance<Inventory>();
+        
+        /*
+        Debug.Log("BattlePlayingSystem initialized with enemy: " + Enemy.Name);
+        Debug.Log("Enemy's Water stat: " + Enemy.WaterStat);
+        Debug.Log("Enemy's Fire stat: " + Enemy.FireStat);
+        Debug.Log("Enemy's Earth stat: " + Enemy.EarthStat);
+        Debug.Log("Enemy's Wood stat: " + Enemy.WoodStat);
+        Debug.Log("Enemy's Metal stat: " + Enemy.MetalStat);
+        */
     
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Healer>());
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Buffer>());
@@ -138,19 +146,52 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleEnemyTurn()
     {
-        Debug.Log("HandleEnemyTurn called");
+        if (!ValidateEnemy())
+        {
+            Debug.LogError("Enemy is not valid");
+            return;
+        }
         
+        Debug.Log("HandleEnemyTurn called");
+    
         BattleUIManager.Instance.nameText.text = Enemy.Name;
         BattleUIManager.Instance.dialogueText.text = "호락호락하게 당할 것 같으냐!";
-        
+    
         DeactivateUI();
-        
+    
+        // Define the elements array
+        string[] elements = new string[] { "wood", "fire", "metal", "water", "earth" };
+
+        Dictionary<Button, string> buttonToElementMap = new Dictionary<Button, string>();
+        for (int i = 0; i < ElementDefButtons.Count; i++)
+        {
+            buttonToElementMap[ElementDefButtons[i]] = elements[i];
+        }
+
         foreach (Button elementDefButton in ElementDefButtons)
         {
             StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementDefButton.gameObject, true, 1f));
             elementDefButton.onClick.RemoveAllListeners();
-            elementDefButton.onClick.AddListener(() => HandleElementDefense(elementDefButton.name.ToLower()));
+            string element = buttonToElementMap[elementDefButton];
+            elementDefButton.onClick.AddListener(() => HandleElementDefense(element));
         }
+    }
+    
+    public bool ValidateEnemy()
+    {
+        if (Enemy == null)
+        {
+            Debug.LogError("Enemy is null");
+            return false;
+        }
+
+        if (Enemy.WaterStat == 0 || Enemy.FireStat == 0 || Enemy.EarthStat == 0 || Enemy.WoodStat == 0 || Enemy.MetalStat == 0)
+        {
+            Debug.LogError("Enemy stats are not initialized");
+            return false;
+        }
+        Debug.Log("Enemy validated successfully");
+        return true;
     }
     private void DeactivateUI()
     {
@@ -198,36 +239,33 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleElementAttack(string element)
     {
-        Debug.Log("Start of player's turn");
         if (Player == null)
         {
             Debug.LogError("Player is null in HandleElementAttack");
             return;
         }
-        
+            
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(AttackButton.gameObject, false, 1f));
         foreach (Button elementButton in ElementButtons)
         {
             StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementButton.gameObject, false, 1f));
         }
 
-        int playerStat = GetPlayerStat(element);
-        Debug.Log("Player stat for " + element + ": " + playerStat);
         int PDam = Player.RollDice(element);
+        Debug.Log("Player's " + element + " stat: " + GetPlayerStat(element));
+        
         if (BufferFlag)
         {
             PDam += 15;
             BufferFlag = false;
         }
-        Debug.Log("PDam: " + PDam);
-        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
-        PDamText.text = PDam.ToString();
 
-        int enemyStat = GetEnemyStat(element);
-        Debug.Log("Enemy stat for " + element + ": " + enemyStat);
         int EDef = Enemy.RollDice(element);
-        Debug.Log("EDef: " + EDef);
+        Debug.Log("Enemy's " + element + " stat: " + GetEnemyStat(element));
+
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, true, 1f));
+        PDamText.text = PDam.ToString();
         EDefText.text = EDef.ToString();
         PDamText.color = PDam == 1 ? Color.red : Color.white;
         EDefText.color = EDef == 1 ? Color.red : Color.white;
@@ -255,12 +293,11 @@ public class BattlePlayingSystem : MonoBehaviour
         }
 
         BattleUIManager.Instance.UpdateUI();
-        TurnTutText.SetActive(true); // Add this line
+        TurnTutText.SetActive(true);
     }
-    
+
     public void HandleElementDefense(string element)
     {
-        Debug.Log("Start of enemy's turn");
         foreach (Button elementDefButton in ElementDefButtons)
         {
             StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(elementDefButton.gameObject, false, 1f));
@@ -269,13 +306,17 @@ public class BattlePlayingSystem : MonoBehaviour
         string[] elements = new string[] { "wood", "fire", "metal", "water", "earth" };
         string enemyElement = elements[UnityEngine.Random.Range(0, elements.Length)];
 
-        int enemyStat = GetEnemyStat(enemyElement);
-        Debug.Log("Enemy stat for " + enemyElement + ": " + enemyStat);
         int EDam = Enemy.RollDice(enemyElement);
-        
-        int playerStat = GetPlayerStat(element);
-        Debug.Log("Player stat for " + element + ": " + playerStat);
+        Debug.Log("Enemy's " + element + " stat: " + GetEnemyStat(element));
+            
+        if (!Array.Exists(elements, el => el == element))
+        {
+            Debug.LogError("Invalid element: " + element);
+            return;
+        }
+            
         int PDef = Player.RollDice(element);
+        Debug.Log("Player's " + element + " stat: " + GetPlayerStat(element));
 
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, true, 1f));
@@ -283,7 +324,7 @@ public class BattlePlayingSystem : MonoBehaviour
         PDamText.text = PDef.ToString();
         EDefText.color = EDam == 1 ? Color.red : Color.white;
         PDamText.color = PDef == 1 ? Color.red : Color.white;
-        
+            
         if (ShielderFlag && PDef < EDam)
         {
             EDam -= 5;
@@ -291,7 +332,7 @@ public class BattlePlayingSystem : MonoBehaviour
             EDefText.text = EDam.ToString();
             ShielderFlag = false;
         }
-        
+            
         if (EDam > PDef)
         {
             Player.HP -= (EDam - PDef);
@@ -317,11 +358,12 @@ public class BattlePlayingSystem : MonoBehaviour
         }
 
         BattleUIManager.Instance.UpdateUI();
-        TurnTutText.SetActive(true); // Add this line
+        TurnTutText.SetActive(true);
     }
 
     private int GetPlayerStat(string element)
     {
+        element = element.ToLower();
         switch (element.ToLower())
         {
             case "water":
@@ -341,6 +383,7 @@ public class BattlePlayingSystem : MonoBehaviour
 
     private int GetEnemyStat(string element)
     {
+        element = element.ToLower();
         switch (element.ToLower())
         {
             case "water":
@@ -438,10 +481,6 @@ public class BattlePlayingSystem : MonoBehaviour
         TurnTutText.SetActive(true);
     }
 
-    public void EnemyAttack()
-    {
-        // TODO: Implement the enemy's attack
-    }
 
     public void HandleBattleEnd()
     {

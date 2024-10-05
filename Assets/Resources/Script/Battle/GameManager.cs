@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
     
     IEnumerator Start()
     {
-        // Wait for the next frame to make sure all Awake methods are called
         yield return null;
 
         if (Player != null)
@@ -88,7 +87,6 @@ public class GameManager : MonoBehaviour
             LoadPlayerStats();
         }
 
-        // Wait for the next frame to make sure Player is initialized
         yield return null;
 
         BattleUIManager.Instance.UpdateUI();
@@ -165,5 +163,9 @@ public class GameManager : MonoBehaviour
         GameManager.Instance.BattleSystem.Enemy = enemyInstance;
         GameManager.Instance.Enemy = enemyInstance;
         BattleCharacter.EnemyInstance = enemyInstance;
+        
+        enemyInstance.InitializeStats();
+        
+        Debug.Log("StartBattle called, enemy created with type: " + typeof(T).Name);
     }
 }

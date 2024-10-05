@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BCJuon : BattleCharacter
 {
-    public BCJuon()
+    public override void InitializeStats()
     {
         Name = "주온";
-        Water = 15;
-        Fire = 75;
-        Earth = 25;
-        Wood = 25;
-        Metal = 30;
+        WaterStat = 15;
+        FireStat = 75;
+        EarthStat = 25;
+        WoodStat = 25;
+        MetalStat = 30;
         Compassion = 0;
     }
     
