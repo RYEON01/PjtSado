@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Baeka.unity
     guid: 4cf040491b7851948ae203a42d4cf2c4
+  - enabled: 1
+    path: Assets/Scenes/Muksa.unity
+    guid: 301fbbc6e3e302645bf7cb00b3891043
   m_configObjects: {}

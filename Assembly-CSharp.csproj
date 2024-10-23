@@ -176,6 +176,7 @@
      <None Include="Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\localization\clientcommon.es.txt" />
      <Folder Include="Library\PackageCache\com.unity.cinemachine@2.8.9" />
      <Folder Include="Library\PackageCache\com.unity.textmeshpro@3.0.6\Editor Resources" />
+     <Folder Include="Assets\Resources\Map\BMuksa" />
      <None Include="Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.10\package.json" />
      <Folder Include="Library\PackageCache\com.unity.2d.common@6.0.6\Tests" />
      <None Include="Library\PackageCache\com.unity.modules.assetbundle@1.0.0\package.json" />
