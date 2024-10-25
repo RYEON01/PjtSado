@@ -14,6 +14,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             if (DialogueManager.Instance != null && dialogue != null)
             {
+                DialogueManager.Instance.PlayerInject(other.gameObject);
                 DialogueManager.Instance.StartDialogue(dialogue, dialogueUI, chaImage);
                 hasTriggered = true;
             }

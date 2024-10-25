@@ -717,13 +717,13 @@
       <Project>{aba4c56d-de1b-4b4b-cbd8-abda07d2c7d1}</Project>
       <Name>Purchasing.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{03887754-18e6-9503-bc6a-7e44072e3f09}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{766b9ed5-5d47-8edb-feb0-a28dd282048e}</Project>
       <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{03887754-18e6-9503-bc6a-7e44072e3f09}</Project>
+      <Name>UnityEditor.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

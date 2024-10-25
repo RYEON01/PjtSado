@@ -5,6 +5,13 @@ public class SceneManagement : MonoBehaviour
 {
     public string sceneToLoad;
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "Birth2" && Input.GetKeyDown(KeyCode.Space))
+        {
+            LoadScene();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -13,7 +20,6 @@ public class SceneManagement : MonoBehaviour
         }
     }
 
-    // This method can be called by a button click event
     public void LoadSceneOnClick()
     {
         LoadScene();
@@ -24,4 +30,5 @@ public class SceneManagement : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 }
+ 
  

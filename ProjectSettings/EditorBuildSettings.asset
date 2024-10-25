@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: 
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Legend.unity
     guid: 870959157cd3ffe41b82b760f3044f3f
@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Muksa.unity
     guid: 301fbbc6e3e302645bf7cb00b3891043
+  - enabled: 1
+    path: Assets/Scenes/Legend2.unity
+    guid: 650aae4ea33df3f41af42e0dd83b047d
   m_configObjects: {}

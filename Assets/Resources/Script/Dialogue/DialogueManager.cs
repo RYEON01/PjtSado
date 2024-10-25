@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -31,20 +32,30 @@ public class DialogueManager : MonoBehaviour
         }
 
         sentences = new Queue<string>();
-        playerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+    }
+
+    public void PlayerInject(GameObject player)
+    {
+        playerMove = player.GetComponent<PlayerMove>();
     }
 
     public void StartDialogue(Dialogue dialogue, GameObject dialogueUI, Image chaImage)
     {
         currentDialogue = dialogue;
         this.dialogueUI = dialogueUI;
-    
+        
+        if (dialogueUI == null) Debug.LogError("dialogueUI is null");
+        if (nameText == null) Debug.LogError("nameText is null");
+        if (dialogueText == null) Debug.LogError("dialogueText is null");
+        if (dialogue == null) Debug.LogError("dialogue is null");
+        if (playerMove == null) Debug.LogError("playerMove is null");
+        
         if (dialogueUI != null && nameText != null && dialogueText != null && dialogue != null)
         {
             dialogueUI.SetActive(true);
             isDialogueActive = true;
             
-            nameText.text = dialogue.chaName; // Update this line
+            nameText.text = dialogue.chaName;
             chaImage.gameObject.SetActive(true);
             
             DialogueTrigger dialogueTrigger = dialogueUI.GetComponent<DialogueTrigger>();

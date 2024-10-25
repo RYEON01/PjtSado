@@ -70,9 +70,12 @@ public class GameManager : MonoBehaviour
             UIManager.IniSettings();
         }
         
-        if (Player != null && Enemy != null)
+        if (SceneManager.GetActiveScene().name == "Battle_C")
         {
-            BattleSystem.Initialize(Player, Enemy);
+            if (Player != null && Enemy != null)
+            {
+                BattleSystem.Initialize(Player, Enemy);
+            }
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
         
@@ -88,8 +91,10 @@ public class GameManager : MonoBehaviour
         }
 
         yield return null;
-
-        BattleUIManager.Instance.UpdateUI();
+        if (SceneManager.GetActiveScene().name == "Battle_C")
+        {
+            BattleUIManager.Instance.UpdateUI();
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -118,7 +123,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("EarthStat: " + Player.EarthStat);
             */
         }
-        BattleUIManager.Instance.UpdateUI();
+        if (SceneManager.GetActiveScene().name == "Battle_C")
+        {
+            BattleUIManager.Instance.UpdateUI();
+        }
     }
 
     void LoadPlayerStats()
@@ -166,6 +174,5 @@ public class GameManager : MonoBehaviour
         
         enemyInstance.InitializeStats();
         
-        Debug.Log("StartBattle called, enemy created with type: " + typeof(T).Name);
     }
 }
