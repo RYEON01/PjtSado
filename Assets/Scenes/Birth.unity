@@ -2142,6 +2142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 668314659}
   Enemy: {fileID: 0}
+  enemyCharacterType: 0
 --- !u!4 &871208093
 Transform:
   m_ObjectHideFlags: 0
@@ -6673,7 +6674,6 @@ GameObject:
   - component: {fileID: 2130831020}
   - component: {fileID: 2130831024}
   - component: {fileID: 2130831025}
-  - component: {fileID: 2130831027}
   - component: {fileID: 2130831028}
   m_Layer: 5
   m_Name: Canvas
@@ -6806,28 +6806,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e51f99dcf801e4995fa9779433afa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2130831027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130831019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef042ab2525b89d4bbdc0100c70eb0b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueText: {fileID: 0}
-  nameText: {fileID: 0}
-  tutText: {fileID: 0}
-  PlayerHPSlider: {fileID: 0}
-  EnemyHPSlider: {fileID: 0}
-  PlayerHPText: {fileID: 0}
-  EnemyHPText: {fileID: 0}
-  ItemHealerButton: {fileID: 0}
-  ItemBufferButton: {fileID: 0}
-  ItemShielderButton: {fileID: 0}
 --- !u!114 &2130831028
 MonoBehaviour:
   m_ObjectHideFlags: 0

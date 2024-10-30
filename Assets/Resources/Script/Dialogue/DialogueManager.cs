@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -17,8 +17,10 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
     private bool isDialogueActive;
-    
     private PlayerMove playerMove;
+
+    // Declare the DialogueEnded event
+    public event Action DialogueEnded;
 
     private void Awake()
     {
@@ -43,12 +45,6 @@ public class DialogueManager : MonoBehaviour
     {
         currentDialogue = dialogue;
         this.dialogueUI = dialogueUI;
-        
-        if (dialogueUI == null) Debug.LogError("dialogueUI is null");
-        if (nameText == null) Debug.LogError("nameText is null");
-        if (dialogueText == null) Debug.LogError("dialogueText is null");
-        if (dialogue == null) Debug.LogError("dialogue is null");
-        if (playerMove == null) Debug.LogError("playerMove is null");
         
         if (dialogueUI != null && nameText != null && dialogueText != null && dialogue != null)
         {
@@ -93,9 +89,9 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         dialogueText.text = sentence;
 
-        if (sentences.Count == currentDialogue.sentences.Count - 2) // Use currentDialogue here
+        if (sentences.Count == currentDialogue.sentences.Count - 2)
         {
-            tutorialText.gameObject.SetActive(false); // Hide the tutorial text
+            tutorialText.gameObject.SetActive(false);
         }
     }
 
@@ -111,6 +107,9 @@ public class DialogueManager : MonoBehaviour
         }
         
         playerMove.SetPlayerMovement(true);
+
+        // Invoke the DialogueEnded event
+        DialogueEnded?.Invoke();
     }
 
     private void Update()

@@ -30,8 +30,6 @@ public class BattlePlayingSystem : MonoBehaviour
     public TextMeshProUGUI PDamText;
     public TextMeshProUGUI EDefText;
 
-    public BattleUIManager UIManager;
-
     private bool isPlayerTurn;
     private bool previousTurn;
     public bool IsPlayerTurn
@@ -52,7 +50,7 @@ public class BattlePlayingSystem : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void IniSettings()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name != "Battle_C")
@@ -89,23 +87,37 @@ public class BattlePlayingSystem : MonoBehaviour
     }
     public void Initialize(BattleCharacter player, BattleCharacter enemy)
     {
+        
         Player = player;
         Player.HP = 100;
         Enemy = enemy;
         Enemy.HP = 100;
+        
+        if (Enemy == null)
+        {
+            Debug.LogError("Enemy is null when trying to initialize BattlePlayingSystem");
+            return;
+        }
+        
+        if (Player == null)
+        {
+            Debug.LogError("Player is null when trying to initialize BattlePlayingSystem");
+            return;
+        }
+        
+        Debug.Log("BattlePlayingSystem initialized with enemy: " + Enemy.Name);
+        
         IsPlayerTurn = true;
         BattleDialogue = ScriptableObject.CreateInstance<BattleDialogue>();
         BattleDialogue.Enemy = enemy;
         Inventory = ScriptableObject.CreateInstance<Inventory>();
         
-        /*
         Debug.Log("BattlePlayingSystem initialized with enemy: " + Enemy.Name);
         Debug.Log("Enemy's Water stat: " + Enemy.WaterStat);
         Debug.Log("Enemy's Fire stat: " + Enemy.FireStat);
         Debug.Log("Enemy's Earth stat: " + Enemy.EarthStat);
         Debug.Log("Enemy's Wood stat: " + Enemy.WoodStat);
         Debug.Log("Enemy's Metal stat: " + Enemy.MetalStat);
-        */
     
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Healer>());
         Inventory.AddItem(ScriptableObject.CreateInstance<Item_Buffer>());

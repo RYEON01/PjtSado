@@ -799,13 +799,13 @@
       <Project>{e16d811b-5b41-ef4b-16d3-e1b10c7ec50a}</Project>
       <Name>Unity.Services.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{766b9ed5-5d47-8edb-feb0-a28dd282048e}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{03887754-18e6-9503-bc6a-7e44072e3f09}</Project>
       <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{766b9ed5-5d47-8edb-feb0-a28dd282048e}</Project>
+      <Name>UnityEngine.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,8 +9,11 @@ public class GameManager : MonoBehaviour
     
     public BCPlayer Player;
     public BattleCharacter Enemy;
+    public BattleCharacterType enemyCharacterType;
     
     private BattleUIManager UIManager;
+
+    private bool OneShot = true;
     
     private static string lastFinishedDialogue = "default";
     private string GetLastFinishedDialogue()
@@ -18,7 +21,7 @@ public class GameManager : MonoBehaviour
         return lastFinishedDialogue;
     }
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -29,56 +32,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        Player = BCPlayer.PlayerInstance;
-        if (Player != null)
-        {
-            DontDestroyOnLoad(Player);
-            LoadPlayerStats();
-        }
 
-        BattleSystem = GetComponent<BattlePlayingSystem>();
-        
-        if (BattleSystem == null)
+        if (OneShot)
         {
-            BattleSystem = gameObject.AddComponent<BattlePlayingSystem>();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            OneShot = false;
         }
-        
-        string finishedDialogue = GetLastFinishedDialogue();
-        switch (finishedDialogue)
-        {
-            case "DCheongi":
-                StartBattle<BCCheongi>();
-                break;
-            case "DJuon":
-                StartBattle<BCJuon>();
-                break;
-            case "DBaeka":
-                StartBattle<BCBaeka>();
-                break;
-            case "DMuksa":
-                StartBattle<BCMuksa>();
-                break;
-            default:
-                StartBattle<BCCheongi>();
-                break;
-        }
-        
-        UIManager = GetComponent<BattleUIManager>();
-        if (UIManager != null)
-        {
-            UIManager.IniSettings();
-        }
-        
-        if (SceneManager.GetActiveScene().name == "Battle_C")
-        {
-            if (Player != null && Enemy != null)
-            {
-                BattleSystem.Initialize(Player, Enemy);
-            }
-        }
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        
     }
     
     IEnumerator Start()
@@ -99,36 +58,87 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"Scene '{scene.name}' loaded.");
+        
+        BattleSetting();
+        PlayerSetting();
+        
         if (Player == null)
         {
             Debug.LogError("Player is null after loading scene " + scene.name);
+            return;
         }
-        else
+    
+        if (!Player.StatsInitialized)
         {
-            if (!Player.StatsInitialized)
+            Player.LoadStats();
+            Debug.Log("Player stats have been loaded successfully.");
+        }
+
+        if (Player.WaterStat == 0 && 
+            Player.FireStat == 0 && 
+            Player.EarthStat == 0 && 
+            Player.WoodStat == 0 && 
+            Player.MetalStat == 0)
+        {
+            Player.SetInitialStats();
+            Debug.Log("Player stats have been initialized.");
+        }
+
+        if (scene.name == "Battle_C")
+        {
+            if (Enemy == null)
             {
-                Player.LoadStats();
+                Enemy = CreateEnemyInstance(enemyCharacterType);
             }
 
-            if (Player.WaterStat == 0 && Player.FireStat == 0 && Player.EarthStat == 0 && Player.WoodStat == 0 && Player.MetalStat == 0)
+            if (Enemy == null)
             {
-                Player.SetInitialStats();
+                Debug.LogError("Enemy is null after loading scene " + scene.name);
+                return;
             }
-            /*
-            Debug.Log("Player stats after loading scene " + scene.name + ":");
-            Debug.Log("WoodStat: " + Player.WoodStat);
-            Debug.Log("FireStat: " + Player.FireStat);
-            Debug.Log("MetalStat: " + Player.MetalStat);
-            Debug.Log("WaterStat: " + Player.WaterStat);
-            Debug.Log("EarthStat: " + Player.EarthStat);
-            */
-        }
-        if (SceneManager.GetActiveScene().name == "Battle_C")
-        {
+
+            Debug.Log("Initializing battle with Player: " + Player + " and Enemy: " + Enemy.Name);
+            if (!Enemy.StatsInitialized)
+            {
+                Enemy.InitializeStats();
+                Debug.Log("Enemy stats have been initialized.");
+            }
+            
+            UIManager.InjectEnemy(Enemy);
+            BattlePlayingSystem.Instance.Initialize(Player, Enemy);
             BattleUIManager.Instance.UpdateUI();
         }
     }
+    
+    private BattleCharacter CreateEnemyInstance(BattleCharacterType type)
+    {
+        GameObject enemyObject = new GameObject(type.ToString());
+        BattleCharacter enemyInstance;
+        
+        switch (type)
+        {
+            case BattleCharacterType.BCCheongi:
+                enemyInstance = enemyObject.AddComponent<BCCheongi>();
+                break;
+            case BattleCharacterType.BCJuon:
+                enemyInstance = enemyObject.AddComponent<BCJuon>();
+                break;
+            case BattleCharacterType.BCBaeka:
+                enemyInstance = enemyObject.AddComponent<BCBaeka>();
+                break;
+            case BattleCharacterType.BCMuksa:
+                enemyInstance = enemyObject.AddComponent<BCMuksa>();
+                break;
+            default:
+                Debug.LogError("Enemy type is unrecognized.");
+                return null;
+        }
 
+        enemyInstance.InitializeStats();
+        return enemyInstance;
+    }
+    
     void LoadPlayerStats()
     {
         if (Player == null)
@@ -157,22 +167,32 @@ public class GameManager : MonoBehaviour
         */
     }
 
-    public void ConfirmStats()
+    private void PlayerSetting()
     {
-        Player.SaveStats();
-        Player.LoadStats();
-        BattleSystem.Player = Player;
-        BattleSystem.Enemy = BattleCharacter.Instance;
+        Player = BCPlayer.PlayerInstance;
+        if (Player != null)
+        {
+            Debug.LogWarning("Player instance: " + Player);
+            DontDestroyOnLoad(Player);
+            LoadPlayerStats();
+        }
     }
-    private void StartBattle<T>() where T : BattleCharacter
+    
+    private void BattleSetting()
     {
-        GameObject enemyObject = new GameObject("Enemy");
-        T enemyInstance = enemyObject.AddComponent<T>();
-        GameManager.Instance.BattleSystem.Enemy = enemyInstance;
-        GameManager.Instance.Enemy = enemyInstance;
-        BattleCharacter.EnemyInstance = enemyInstance;
+        BattleSystem = FindObjectOfType<BattlePlayingSystem>();
         
-        enemyInstance.InitializeStats();
+        if (BattleSystem == null)
+        {
+            BattleSystem = gameObject.AddComponent<BattlePlayingSystem>();
+        }
         
+        BattleSystem.IniSettings();
+        
+        UIManager = FindObjectOfType<BattleUIManager>();
+        if (UIManager != null)
+        {
+            UIManager.IniSettings();
+        }
     }
 }

@@ -8166,41 +8166,14 @@ GameObject:
   - component: {fileID: 1428362468}
   - component: {fileID: 1428362467}
   - component: {fileID: 1428362466}
-  - component: {fileID: 1428362465}
+  - component: {fileID: 1428362469}
   m_Layer: 0
-  m_Name: DTrigger3
+  m_Name: DTriggerC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1428362465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428362464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39050b2b1e8d9644d88d9d0cd52443f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    chaName: "\uCCAD\uC774"
-    sentences:
-    - "\uB258\uC2DC\uC624?"
-    - "\uC544\uD558, \uB610\uB2E4\uB978 \uC0AC\uB3C4\uAC00 \uB2F9\uB3C4\uD55C \uAC8C\uC694?"
-    - "\uC6B4\uC774 \uC88B\uC740 \uC904 \uC544\uC2DC\uC624, \uC544\uC9C1 \uB098\uB294
-      \uBD88\uC644\uC804\uD788 \uAD6C\uD604\uB418\uC5C8\uC73C\uB2C8 \uBCC4 \uC218
-      \uC5C6\uC774 \uB193\uC544\uC8FC\uC5B4\uC57C \uD558\uC624."
-    - "\uD5C8\uB098 \uB0B4 \uC838\uB4DC\uB9AC\uB294 \uAC83\uC740 \uC774\uBC88 \uD55C\uBC88
-      \uBFD0\uC774\uB2C8..."
-    - "\uC790, \uB2E4\uC74C \uC218\uB77C\uC5D0\uAC8C\uB85C \uB118\uC5B4\uAC00\uC2DC\uC624."
-    - "...\uADF8\uB9AC\uACE0, \uC808\uB300\uC790\uB97C \uADF8\uB9AC \uBBFF\uC9C0\uB294
-      \uB9C8\uC2DC\uAC8C\uB098."
-  dialogueUI: {fileID: 816597404}
-  chaImage: {fileID: 758476446}
 --- !u!61 &1428362466
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8294,6 +8267,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1428362469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428362464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6fd967b8f497cd4db40e879cf5d44cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    chaName: "\uCCAD\uC774"
+    sentences:
+    - "\uB258\uC2DC\uC624?"
+    - "\uB610\uB2E4\uB978 \uC0AC\uB3C4\uB77C..."
+    - "\uB3CC\uC544\uAC00\uC2DC\uC624, \uC774\uACF3\uC740 \uC774\uBBF8 \uCC9C\uC9C0\uC2E0\uBA85\uC5D0
+      \uB0B4\uCCD0\uC9C4 \uC790\uB4E4\uB9CC\uC774 \uC788\uC18C."
+    - "...\uD5C8\uB098 \uC774 \uB9D0\uC744 \uB4E3\uACE0 \uB3CC\uC544\uAC08 \uC791\uC790\uC600\uC73C\uBA74
+      \uC218\uB77C\uB3C4\uC5D8 \uC624\uC9C0 \uC54A\uC558\uACA0\uC9C0."
+    - "\uADF8\uB798, \uADF8\uB807\uB2E4\uBA74 \uC790\uB124 \uC6D0\uD558\uB294\uB300\uB85C
+      \uD569\uC744 \uACA8\uB8E8\uACA0\uC18C\uC774\uB2E4."
+  dialogueUI: {fileID: 816597404}
+  chaImage: {fileID: 758476446}
 --- !u!1 &1429024959
 GameObject:
   m_ObjectHideFlags: 0

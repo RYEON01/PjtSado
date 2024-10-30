@@ -47,17 +47,34 @@ public class BattleUIManager : MonoBehaviour
         else
         {
             Player = GameManager.Instance.Player;
-            Enemy = GameManager.Instance.Enemy;
         }
     }
-    public BattleUIManager(BattleCharacter player, BattleCharacter enemy)
+    
+    public void InjectEnemy(BattleCharacter enemy)
     {
-        Player = player;
         Enemy = enemy;
     }
 
     public void UpdateUI()
     {
+        if (PlayerHPSlider == null || EnemyHPSlider == null || PlayerHPText == null || EnemyHPText == null)
+        {
+            Debug.LogError("UI components are not assigned in BattleUIManager.");
+            return;
+        }
+
+        if (Player == null)
+        {
+            Debug.LogError("Player reference is null in BattleUIManager.");
+            return;
+        }
+        
+        if (Enemy == null)
+        {
+            Debug.LogError("Enemy reference is null in BattleUIManager.");
+            return;
+        }
+
         PlayerHPSlider.value = Player.HP;
         EnemyHPSlider.value = Enemy.HP;
         PlayerHPText.text = $"{Player.HP}/100";

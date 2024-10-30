@@ -1681,7 +1681,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109533}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattlePlayingSystem, Assembly-CSharp
         m_MethodName: HandleBraceAssess
         m_Mode: 1
@@ -2182,7 +2182,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547232357
 GameObject:
@@ -2427,7 +2427,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2852,7 +2852,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &729836754
 GameObject:
@@ -3149,7 +3149,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109529}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -3377,7 +3377,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &845726341
 MonoBehaviour:
@@ -3400,6 +3400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 849023763}
+  - component: {fileID: 849023764}
   m_Layer: 0
   m_Name: BattleUIManager
   m_TagString: Untagged
@@ -3420,8 +3421,30 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &849023764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849023761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef042ab2525b89d4bbdc0100c70eb0b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueText: {fileID: 1166660311}
+  nameText: {fileID: 1779615589}
+  tutText: {fileID: 895930816}
+  PlayerHPSlider: {fileID: 365439607}
+  EnemyHPSlider: {fileID: 201206065}
+  PlayerHPText: {fileID: 1269834702}
+  EnemyHPText: {fileID: 1717823328}
+  ItemHealerButton: {fileID: 801653160}
+  ItemBufferButton: {fileID: 1743206137}
+  ItemShielderButton: {fileID: 1941592544}
 --- !u!1 &850534276
 GameObject:
   m_ObjectHideFlags: 0
@@ -4260,7 +4283,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1040448730
 GameObject:
@@ -5051,7 +5074,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109533}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattlePlayingSystem, Assembly-CSharp
         m_MethodName: PlayerBrace
         m_Mode: 1
@@ -6243,7 +6266,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109533}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattlePlayingSystem, Assembly-CSharp
         m_MethodName: PlayerAttack
         m_Mode: 1
@@ -6666,7 +6689,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109533}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattlePlayingSystem, Assembly-CSharp
         m_MethodName: HandleBraceItem
         m_Mode: 1
@@ -8149,6 +8172,73 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813375845}
   m_CullTransparentMesh: 1
+--- !u!1 &1824957407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1824957409}
+  - component: {fileID: 1824957408}
+  m_Layer: 0
+  m_Name: BPS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1824957408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824957407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca01d8d85ed5854aa16828c721523ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackButton: {fileID: 1469482012}
+  BraceButton: {fileID: 1198984487}
+  Brace_AssessButton: {fileID: 413151716}
+  Brace_ItemButton: {fileID: 1618966176}
+  PlayerPentagonGraph: {fileID: 577536611}
+  EnemyPentagonGraph: {fileID: 1762912224}
+  ElementButtons:
+  - {fileID: 1024129616}
+  - {fileID: 1307308694}
+  - {fileID: 486104344}
+  - {fileID: 351429542}
+  - {fileID: 2036137608}
+  ElementDefButtons:
+  - {fileID: 504809508}
+  - {fileID: 1952736098}
+  - {fileID: 137507004}
+  - {fileID: 97990749}
+  - {fileID: 766031645}
+  DialogueObj: {fileID: 1825539080}
+  PentagonGraphUI: {fileID: 211642626}
+  TurnTutText: {fileID: 886666081}
+  PDamText: {fileID: 89345471}
+  EDefText: {fileID: 376984955}
+--- !u!4 &1824957409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824957407}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 70.309425, y: 19.590425, z: 260.95648}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1825539080
 GameObject:
   m_ObjectHideFlags: 0
@@ -8376,7 +8466,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1941592542
 GameObject:
@@ -8463,7 +8553,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109533}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BattlePlayingSystem, Assembly-CSharp
         m_MethodName: PlayerBrace
         m_Mode: 1
@@ -8665,112 +8755,6 @@ Transform:
   m_Father: {fileID: 577536613}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2002109529
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2002109532}
-  - component: {fileID: 2002109531}
-  - component: {fileID: 2002109533}
-  - component: {fileID: 2002109534}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2002109531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002109529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f25121e5f3c52fe48aa9f5573760e3d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 845726341}
-  Enemy: {fileID: 0}
---- !u!4 &2002109532
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002109529}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1143.0109, y: 595.949, z: -9722.462}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2002109533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002109529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca01d8d85ed5854aa16828c721523ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackButton: {fileID: 1469482012}
-  BraceButton: {fileID: 1198984487}
-  Brace_AssessButton: {fileID: 413151716}
-  Brace_ItemButton: {fileID: 1618966176}
-  PlayerPentagonGraph: {fileID: 577536611}
-  EnemyPentagonGraph: {fileID: 1762912224}
-  ElementButtons:
-  - {fileID: 1024129616}
-  - {fileID: 1307308694}
-  - {fileID: 486104344}
-  - {fileID: 351429542}
-  - {fileID: 2036137608}
-  ElementDefButtons:
-  - {fileID: 504809508}
-  - {fileID: 1952736098}
-  - {fileID: 137507004}
-  - {fileID: 97990749}
-  - {fileID: 766031645}
-  DialogueObj: {fileID: 1825539080}
-  PentagonGraphUI: {fileID: 211642626}
-  TurnTutText: {fileID: 886666081}
-  PDamText: {fileID: 89345471}
-  EDefText: {fileID: 376984955}
-  UIManager: {fileID: 0}
---- !u!114 &2002109534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002109529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef042ab2525b89d4bbdc0100c70eb0b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueText: {fileID: 1166660311}
-  nameText: {fileID: 1779615589}
-  tutText: {fileID: 895930816}
-  PlayerHPSlider: {fileID: 365439607}
-  EnemyHPSlider: {fileID: 201206065}
-  PlayerHPText: {fileID: 1269834702}
-  EnemyHPText: {fileID: 1717823328}
-  ItemHealerButton: {fileID: 801653160}
-  ItemBufferButton: {fileID: 1743206137}
-  ItemShielderButton: {fileID: 1941592544}
 --- !u!1 &2026832702
 GameObject:
   m_ObjectHideFlags: 0
@@ -8930,7 +8914,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2002109529}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1

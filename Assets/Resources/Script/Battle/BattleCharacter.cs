@@ -105,3 +105,11 @@ public class BattleCharacter : MonoBehaviour
         return Random.Range(1, maxRoll + 1);
     }
 }
+
+public enum BattleCharacterType
+{
+    BCCheongi,
+    BCJuon,
+    BCBaeka,
+    BCMuksa
+}
