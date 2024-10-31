@@ -41,6 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Script\Dialogue\DialogueTrigger_Battle.cs" />
      <Compile Include="Assets\Resources\Script\Battle\Inventory.cs" />
      <Compile Include="Assets\Resources\Script\Birth\PentagonGraph.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
