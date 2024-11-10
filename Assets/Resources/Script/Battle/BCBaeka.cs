@@ -7,11 +7,11 @@ public class BCBaeka : BattleCharacter
     public override void InitializeStats()
     {
         Name = "백아";
-        WaterStat = 35;
-        FireStat = 25;
-        EarthStat = 25;
-        WoodStat = 15;
-        MetalStat = 90;
+        WaterStat = 25;
+        FireStat = 15;
+        EarthStat = 15;
+        WoodStat = 5;
+        MetalStat = 60;
         Compassion = 0;
     }
     

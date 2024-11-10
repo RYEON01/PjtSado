@@ -14,12 +14,6 @@ public class GameManager : MonoBehaviour
     private BattleUIManager UIManager;
 
     private bool OneShot = true;
-    
-    private static string lastFinishedDialogue = "default";
-    private string GetLastFinishedDialogue()
-    {
-        return lastFinishedDialogue;
-    }
 
     private void Awake()
     {
@@ -193,6 +187,28 @@ public class GameManager : MonoBehaviour
         if (UIManager != null)
         {
             UIManager.IniSettings();
+        }
+    }
+    
+    public void HandleBattleEnd(BattleCharacter enemy)
+    {
+        switch (enemy)
+        {
+            case BCCheongi:
+                SceneManager.LoadScene("Cheongi_End");
+                break;
+            case BCJuon:
+                SceneManager.LoadScene("Juon_End");
+                break;
+            case BCBaeka:
+                SceneManager.LoadScene("Baeka_End");
+                break;
+            case BCMuksa:
+                SceneManager.LoadScene("Muksa_End");
+                break;
+            default:
+                Debug.LogError("Unknown enemy type. Can't transition to the end scene.");
+                break;
         }
     }
 }

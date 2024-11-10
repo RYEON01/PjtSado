@@ -35,16 +35,20 @@ public class DialogueTrigger_Battle : MonoBehaviour
     private void OnDialogueEnded()
     {
         DialogueManager.Instance.DialogueEnded -= OnDialogueEnded;
-
         GameManager.Instance.enemyCharacterType = enemyCharacterType;
 
         StartCoroutine(StartBattleCoroutine());
+    }
+    
+    public void Disable()
+    {
+        hasTriggered = true;
     }
 
     private IEnumerator StartBattleCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("Starting battle sequence...");
+        //Debug.Log("Starting battle sequence...");
 
         if (GameManager.Instance == null)
         {
@@ -80,6 +84,4 @@ public class DialogueTrigger_Battle : MonoBehaviour
             Debug.LogError($"Could not find type for {enemyCharacterType}. Ensure the name is correct.");
         }
     }
-
-
 }

@@ -7,11 +7,11 @@ public class BCMuksa : BattleCharacter
     public override void InitializeStats()
     {
         Name = "묵사";
-        WaterStat = 110;
-        FireStat = 25;
-        EarthStat = 20;
-        WoodStat = 25;
-        MetalStat = 30;
+        WaterStat = 65;
+        FireStat = 15;
+        EarthStat = 10;
+        WoodStat = 15;
+        MetalStat = 20;
         Compassion = 0;
     }
     

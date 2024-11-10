@@ -107,6 +107,7 @@
      <Compile Include="Assets\Resources\Script\Birth\BirthBasics.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\Resources\Script\Dialogue\DialogueManager.cs" />
+     <Compile Include="Assets\Resources\Script\Scene\GameOverSceneButton.cs" />
      <Folder Include="Assets" />
      <Folder Include="Library\PackageCache\com.unity.ads@3.7.5\Runtime" />
      <Folder Include="Assets\Resources\Script" />

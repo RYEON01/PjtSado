@@ -7,11 +7,11 @@ public class BCJuon : BattleCharacter
     public override void InitializeStats()
     {
         Name = "주온";
-        WaterStat = 15;
-        FireStat = 75;
-        EarthStat = 25;
-        WoodStat = 25;
-        MetalStat = 30;
+        WaterStat = 5;
+        FireStat = 55;
+        EarthStat = 15;
+        WoodStat = 15;
+        MetalStat = 20;
         Compassion = 0;
     }
     

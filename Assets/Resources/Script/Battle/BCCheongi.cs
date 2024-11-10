@@ -7,11 +7,11 @@ public class BCCheongi : BattleCharacter
     public override void InitializeStats()
     {
         Name = "청이";
-        WaterStat = 65;
-        FireStat = 30;
-        EarthStat = 20;
-        WoodStat = 25;
-        MetalStat = 10;
+        WaterStat = 50;
+        FireStat = 20;
+        EarthStat = 10;
+        WoodStat = 15;
+        MetalStat = 5;
         Compassion = 0;
         
         /*

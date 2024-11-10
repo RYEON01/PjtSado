@@ -496,11 +496,12 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleBattleEnd()
     {
-        // TODO: Implement the ending phase of the battle
+        GameManager.Instance.HandleBattleEnd(Enemy);
     }
     
     public void GameOver()
     {
-        // TODO: Implement GameOver
+        Debug.LogWarning("GameOver.");
+        SceneManager.LoadScene("GameOver");
     }
 }
