@@ -26,6 +26,11 @@ public class BattleUIManager : MonoBehaviour
     public Button ItemHealerButton;
     public Button ItemBufferButton;
     public Button ItemShielderButton;
+    
+    public Image BCCheongiSprite;
+    public Image BCJuonSprite;
+    public Image BCBaekaSprite;
+    public Image BCMuksaSprite;
 
     public void IniSettings()
     {
@@ -79,6 +84,22 @@ public class BattleUIManager : MonoBehaviour
         EnemyHPSlider.value = Enemy.HP;
         PlayerHPText.text = $"{Player.HP}/100";
         EnemyHPText.text = $"{Enemy.HP}/100";
+       
+        switch (Enemy.GetType().Name)
+        {
+            case "BCCheongi":
+                BCCheongiSprite.gameObject.SetActive(true);
+                break;
+            case "BCJuon":
+                BCJuonSprite.gameObject.SetActive(true);
+                break;
+            case "BCBaeka":
+                BCBaekaSprite.gameObject.SetActive(true);
+                break;
+            case "BCMuksa":
+                BCMuksaSprite.gameObject.SetActive(true);
+                break;
+        }
         
         Debug.Log("Player object after UpdateUI: " + Player);
         Debug.Log("Enemy object after UpdateUI: " + Enemy);

@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Juon_End.unity
     guid: 921656ea4e7f0ec46b2b118375a2ab90
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: d56ab7a86b42d3b4fbd63b7a9c2954be
   m_configObjects: {}

@@ -1083,7 +1083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &236689812
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3445,6 +3445,10 @@ MonoBehaviour:
   ItemHealerButton: {fileID: 801653160}
   ItemBufferButton: {fileID: 1743206137}
   ItemShielderButton: {fileID: 1941592544}
+  BCCheongiSprite: {fileID: 236689813}
+  BCJuonSprite: {fileID: 1308562745}
+  BCBaekaSprite: {fileID: 729836756}
+  BCMuksaSprite: {fileID: 1790707535}
 --- !u!1 &850534276
 GameObject:
   m_ObjectHideFlags: 0

@@ -111,6 +111,8 @@ public class BattlePlayingSystem : MonoBehaviour
         BattleDialogue = ScriptableObject.CreateInstance<BattleDialogue>();
         BattleDialogue.Enemy = enemy;
         Inventory = ScriptableObject.CreateInstance<Inventory>();
+        BattleUIManager.Instance.InjectEnemy(Enemy);
+        BattleUIManager.Instance.UpdateUI();
         
         Debug.Log("BattlePlayingSystem initialized with enemy: " + Enemy.Name);
         Debug.Log("Enemy's Water stat: " + Enemy.WaterStat);
@@ -167,7 +169,78 @@ public class BattlePlayingSystem : MonoBehaviour
         Debug.Log("HandleEnemyTurn called");
     
         BattleUIManager.Instance.nameText.text = Enemy.Name;
-        BattleUIManager.Instance.dialogueText.text = "호락호락하게 당할 것 같으냐!";
+        if (Enemy.HP <= 100 && Enemy.HP >= 75)
+        {
+            switch (Enemy.GetType().Name)
+            {
+                case "BCCheongi":
+                    BattleUIManager.Instance.dialogueText.text = "이 방법을 선택해야 하는 것이 아쉽소.";
+                    break;
+                case "BCJuon":
+                    BattleUIManager.Instance.dialogueText.text = "너, 싸울 줄 아는 녀석이네. 맘에 들어.";
+                    break;
+                case "BCBaeka":
+                    BattleUIManager.Instance.dialogueText.text = "가여운 것... 미안해요.";
+                    break;
+                case "BCMuksa":
+                    BattleUIManager.Instance.dialogueText.text = "그까짓 실력으로 스스로를 사도라 하는 겐가?";
+                    break;
+            }
+        }
+        if (Enemy.HP < 75 && Enemy.HP >= 50)
+        {
+            switch (Enemy.GetType().Name)
+            {
+                case "BCCheongi":
+                    BattleUIManager.Instance.dialogueText.text = "정녕 모르겠소? 속는 것은 당신이거늘...";
+                    break;
+                case "BCJuon":
+                    BattleUIManager.Instance.dialogueText.text = "흥, 이딴 생채기 따위!";
+                    break;
+                case "BCBaeka":
+                    BattleUIManager.Instance.dialogueText.text = "저도 이 방법 뿐이 없다는 것을 부디 헤아려주시길...";
+                    break;
+                case "BCMuksa":
+                    BattleUIManager.Instance.dialogueText.text = "어디, 더 해보게나. 결코 쓰러지지 않을 것이니.";
+                    break;
+            }
+        }
+        if (Enemy.HP < 50 && Enemy.HP >= 25)
+        {
+            switch (Enemy.GetType().Name)
+            {
+                case "BCCheongi":
+                    BattleUIManager.Instance.dialogueText.text = "우매한 것...";
+                    break;
+                case "BCJuon":
+                    BattleUIManager.Instance.dialogueText.text = "너... 이전에 왔던 녀석들과는 다르잖아?";
+                    break;
+                case "BCBaeka":
+                    BattleUIManager.Instance.dialogueText.text = "쉽게 돌아갈 맘이 없으시군요.";
+                    break;
+                case "BCMuksa":
+                    BattleUIManager.Instance.dialogueText.text = "과거와 똑같은 수순을 밟게 둘 순 없어...!";
+                    break;
+            }
+        }
+        if (Enemy.HP < 25)
+        {
+            switch (Enemy.GetType().Name)
+            {
+                case "BCCheongi":
+                    BattleUIManager.Instance.dialogueText.text = "소인은 소명을 다할 뿐이오.";
+                    break;
+                case "BCJuon":
+                    BattleUIManager.Instance.dialogueText.text = "젠장... 이까짓 상처는 아무것도 아니라고!";
+                    break;
+                case "BCBaeka":
+                    BattleUIManager.Instance.dialogueText.text = "안 좋은 예감이 드네요... 당신을 용서할게요.";
+                    break;
+                case "BCMuksa":
+                    BattleUIManager.Instance.dialogueText.text = "내 목숨 닳는 한이 있어도 이 자리를 지킬 것이다!";
+                    break;
+            }
+        }
     
         DeactivateUI();
     
@@ -496,6 +569,10 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public void HandleBattleEnd()
     {
+        BattleUIManager.Instance.BCCheongiSprite.gameObject.SetActive(false);
+        BattleUIManager.Instance.BCJuonSprite.gameObject.SetActive(false);
+        BattleUIManager.Instance.BCBaekaSprite.gameObject.SetActive(false);
+        BattleUIManager.Instance.BCMuksaSprite.gameObject.SetActive(false);
         GameManager.Instance.HandleBattleEnd(Enemy);
     }
     
