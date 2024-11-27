@@ -129,6 +129,7 @@
      <Folder Include="Library\PackageCache\com.unity.postprocessing@3.2.2\PostProcessing\Textures\LensDirt" />
      <Folder Include="Library\PackageCache\com.unity.searcher@4.9.1" />
      <None Include="Library\PackageCache\com.unity.modules.screencapture@1.0.0\package.json" />
+     <Folder Include="Assets\HDRPDefaultResources\Water Shader" />
      <Folder Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.10\Tests" />
      <None Include="Library\PackageCache\com.unity.modules.cloth@1.0.0\package.json" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
