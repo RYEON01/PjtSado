@@ -68,7 +68,7 @@ public class Item_Shielder : Item
 {
     private void Awake()
     {
-        Name = "방어";
+        Name = "보호";
         Description = "당신이 받는 피해를 일부 반사시킨다.";
         Quantity = 5;
     }

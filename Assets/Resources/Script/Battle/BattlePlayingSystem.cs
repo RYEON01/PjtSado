@@ -29,6 +29,8 @@ public class BattlePlayingSystem : MonoBehaviour
 
     public TextMeshProUGUI PDamText;
     public TextMeshProUGUI EDefText;
+    public GameObject BattleAttackIcon;
+    public GameObject BattleDefenseIcon;
 
     private bool isPlayerTurn;
     private bool previousTurn;
@@ -282,6 +284,8 @@ public class BattlePlayingSystem : MonoBehaviour
     {
         Debug.Log("DeactivateUI called");
         
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleAttackIcon.gameObject, false, 1f));
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleDefenseIcon.gameObject, false, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, false, 0f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, false, 0f));
         
@@ -348,6 +352,7 @@ public class BattlePlayingSystem : MonoBehaviour
         int EDef = Enemy.RollDice(element);
         Debug.Log("Enemy's " + element + " stat: " + GetEnemyStat(element));
 
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleAttackIcon.gameObject, true, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, true, 1f));
         PDamText.text = PDam.ToString();
@@ -403,6 +408,7 @@ public class BattlePlayingSystem : MonoBehaviour
         int PDef = Player.RollDice(element);
         Debug.Log("Player's " + element + " stat: " + GetPlayerStat(element));
 
+        StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(BattleDefenseIcon.gameObject, true, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(PDamText.gameObject, true, 1f));
         StartCoroutine(BattleUIManager.Instance.SetActiveWithFade(EDefText.gameObject, true, 1f));
         EDefText.text = EDam.ToString();
