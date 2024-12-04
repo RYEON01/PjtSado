@@ -31,6 +31,16 @@ public class BattleUIManager : MonoBehaviour
     public Image BCJuonSprite;
     public Image BCBaekaSprite;
     public Image BCMuksaSprite;
+    
+    public Button startTutorialButton;
+    public GameObject[] tutorialPages;
+    public GameObject gradationBlack;
+    public Button nextButton;
+    public Button previousButton;
+    public Button exitButton;
+    private int currentPageIndex = 0;
+    private bool tutFlag = true;
+
 
     public void IniSettings()
     {
@@ -79,6 +89,14 @@ public class BattleUIManager : MonoBehaviour
             Debug.LogError("Enemy reference is null in BattleUIManager.");
             return;
         }
+        if (startTutorialButton != null)
+        {
+            if (tutFlag)
+            {
+                startTutorialButton.onClick.AddListener(InitializeTutorial);
+                tutFlag = false;
+            }
+        }
 
         PlayerHPSlider.value = Player.HP;
         EnemyHPSlider.value = Enemy.HP;
@@ -103,16 +121,6 @@ public class BattleUIManager : MonoBehaviour
         
         Debug.Log("Player object after UpdateUI: " + Player);
         Debug.Log("Enemy object after UpdateUI: " + Enemy);
-    }
-
-    public void ShowDialogue(string dialogue)
-    {
-        // TODO: Show the dialogue on the UI
-    }
-
-    public void ShowAnswerChoices(string[] choices)
-    {
-        // TODO: Show the answer choices on the UI
     }
 
     public IEnumerator SetActiveWithFade(GameObject obj, bool active, float fadeTime)
@@ -209,5 +217,73 @@ public class BattleUIManager : MonoBehaviour
                 canvasGroup.interactable = item.Quantity > 0;
             }
         }
+    }
+    
+    public void InitializeTutorial()
+    {
+        gradationBlack.SetActive(true);
+        foreach (var page in tutorialPages)
+        {
+            page.SetActive(false);
+        }
+        if (tutorialPages.Length > 0)
+        {
+            tutorialPages[0].SetActive(true);
+        }
+        exitButton.gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(true);
+        previousButton.gameObject.SetActive(true);
+        
+        nextButton.onClick.RemoveAllListeners();
+        previousButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
+        
+        nextButton.onClick.AddListener(OnNextPage);
+        previousButton.onClick.AddListener(OnPreviousPage);
+        exitButton.onClick.AddListener(OnExitTutorial);
+
+        UpdateTutorialButtonVisibility();
+        
+        Debug.Log($"InitializeTutorial Loaded.");
+    }
+
+    public void OnNextPage()
+    {
+        Debug.Log("OnNext Loaded.");
+        tutorialPages[currentPageIndex].SetActive(false);
+        currentPageIndex = Mathf.Min(currentPageIndex + 1, tutorialPages.Length - 1);
+        tutorialPages[currentPageIndex].SetActive(true);
+        UpdateTutorialButtonVisibility();
+    }
+
+    public void OnPreviousPage()
+    {
+        Debug.Log("OnPrevious Loaded.");
+        tutorialPages[currentPageIndex].SetActive(false);
+        currentPageIndex = Mathf.Max(currentPageIndex - 1, 0);
+        tutorialPages[currentPageIndex].SetActive(true);
+        UpdateTutorialButtonVisibility();
+    }
+
+    public void OnExitTutorial()
+    {
+        Debug.Log("OnExit Loaded.");
+        foreach (var page in tutorialPages)
+        {
+            page.SetActive(false);
+        }
+        currentPageIndex = 0;
+        gradationBlack.SetActive(false);
+        exitButton.gameObject.SetActive(false);
+        nextButton.gameObject.SetActive(false);
+        previousButton.gameObject.SetActive(false);
+    }
+
+    public void UpdateTutorialButtonVisibility()
+    {
+        exitButton.gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(currentPageIndex < tutorialPages.Length - 1);
+        previousButton.gameObject.SetActive(currentPageIndex > 0);
+        Debug.Log($"Previous Button Active: {previousButton.gameObject.activeSelf}, Next Button Active: {nextButton.gameObject.activeSelf}, Exit Button Active: {exitButton.gameObject.activeSelf}");
     }
 }
